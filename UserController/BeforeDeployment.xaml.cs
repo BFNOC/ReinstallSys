@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace ReinstallSys.UserController
 {
     /// <summary>
-    /// MyStepBar.xaml 的交互逻辑
+    /// BeforeDeployment.xaml 的交互逻辑
     /// </summary>
-    public partial class MyStepBar : UserControl
+    public partial class BeforeDeployment : UserControl
     {
-        public MyStepBar()
+        public BeforeDeployment()
         {
             InitializeComponent();
-        }
-
-        private void StepBar_StepChanged(object sender, HandyControl.Data.FunctionEventArgs<int> e)
-        {
-            Console.WriteLine(StepBar.StepIndex);
         }
     }
 }

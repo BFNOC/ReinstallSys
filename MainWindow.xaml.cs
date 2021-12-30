@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ReinstallSys.UserController;
+using ReinstallSys.ViewModel.Main;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ReinstallSys
 {
@@ -20,9 +9,23 @@ namespace ReinstallSys
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel vm;
         public MainWindow()
         {
             InitializeComponent();
+            vm = new MainWindowViewModel();
+            DataContext = vm;
+            myStepBar.StepBar.StepChanged += StepBar_StepChanged;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void StepBar_StepChanged(object sender, HandyControl.Data.FunctionEventArgs<int> e)
+        {
+            System.Console.WriteLine("增加事件");
         }
     }
 }

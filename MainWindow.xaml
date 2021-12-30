@@ -12,8 +12,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <DockPanel>
-            <usercontrol:MyStepBar />
-        </DockPanel>
+        <usercontrol:MyStepBar Grid.Row="0" x:Name="myStepBar"/>
+        
+        <Grid x:Name="mainContent" Grid.Row="1">
+            <Button Content="测试" Click="Button_Click"></Button>
+        </Grid>
+        
     </Grid>
 </Window>

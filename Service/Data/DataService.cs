@@ -1,9 +1,5 @@
 ﻿using ReinstallSys.Data.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReinstallSys.Service.Data
 {
@@ -18,7 +14,16 @@ namespace ReinstallSys.Service.Data
                     Header = "步骤",
                     Description = "部署前准备"
                 },
-
+                new StepBarModel
+                {
+                    Header = "步骤",
+                    Description = "打印机安装"
+                },
+                new StepBarModel
+                {
+                    Header = "步骤",
+                    Description = "Office安装"
+                },
                 new StepBarModel
                 { 
                     Header = "步骤",
@@ -27,7 +32,35 @@ namespace ReinstallSys.Service.Data
                 new StepBarModel
                 {
                     Header = "步骤",
-                    Description = "Office安装"
+                    Description = "部署完成"
+                }
+            };
+        }
+
+        public List<BeforDeploymentModel> GetBeforDeploymentsList()
+        {
+            return new()
+            {
+                new BeforDeploymentModel
+                { 
+                    Description = "正在进行部署前准备"
+                },
+                new BeforDeploymentModel
+                {
+                    Description = "请勿操作计算机或断开电源"
+                }
+            };
+        }
+
+        public List<SoftwareModel> GetSoftwaresList()
+        {
+            return new()
+            {
+                new SoftwareModel
+                {
+                    SoftwareName = "QQ",
+                    SoftwareDescription = "通讯软件",
+                    SoftwareProgressBar = 100
                 }
             };
         }

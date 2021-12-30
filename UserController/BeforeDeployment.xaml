@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="ReinstallSys.UserController.BeforeDeployment"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReinstallSys.UserController"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d" 
+             DataContext="{Binding BeforDeployment, Source={StaticResource Locator}}" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <StackPanel>
+        <hc:LoadingLine Margin="0,30" Foreground="BlueViolet" Style="{StaticResource LoadingLineLarge}"/>
+        <TextBlock  Text="{Binding DataList[0].Description}" HorizontalAlignment="Center" FontSize="24px" />
+        <TextBlock  Text="{Binding DataList[1].Description}" HorizontalAlignment="Center" FontSize="24px" />
+    </StackPanel>
+</UserControl>

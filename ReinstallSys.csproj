@@ -108,12 +108,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\Model\BeforDeploymentModel.cs" />
+    <Compile Include="Data\Model\MainWindowModel.cs" />
+    <Compile Include="Data\Model\SoftwareModel.cs" />
     <Compile Include="Data\Model\StepBarModel.cs" />
     <Compile Include="Service\Data\DataService.cs" />
+    <Compile Include="UserController\BeforeDeployment.xaml.cs">
+      <DependentUpon>BeforeDeployment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserController\MyStepBar.xaml.cs">
       <DependentUpon>MyStepBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MyUserControl\SoftwareControl.xaml.cs">
+      <DependentUpon>SoftwareControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserController\SoftwareInstall.xaml.cs">
+      <DependentUpon>SoftwareInstall.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Controls\BeforDeploymentViewModel.cs" />
+    <Compile Include="ViewModel\Controls\SoftwareViewModel.cs" />
     <Compile Include="ViewModel\Controls\StepBarViewModel.cs" />
+    <Compile Include="ViewModel\Main\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
@@ -128,7 +143,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserController\BeforeDeployment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserController\MyStepBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyUserControl\SoftwareControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserController\SoftwareInstall.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,5 +199,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

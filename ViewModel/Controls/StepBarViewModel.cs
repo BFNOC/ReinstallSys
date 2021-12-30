@@ -11,38 +11,39 @@ namespace ReinstallSys.ViewModel.Controls
     {
         public StepBarViewModel(DataService dataService) => DataList = dataService.GetStepBarDataList();
 
-        private int _stepIndex;
-        public int StepIndex
-        {
-            get => _stepIndex;
-            set => _stepIndex = value;
-        }
-
+  
         /// <summary>
         ///     下一步
         /// </summary>
-        public RelayCommand<Panel> NextCmd => new(Next);
+        public RelayCommand<StepBar> NextCmd => new(Next);
 
         /// <summary>
         ///     上一步
         /// </summary>
-        public RelayCommand<Panel> PrevCmd => new(Prev);
+        public RelayCommand<StepBar> PrevCmd => new(Prev);
 
-        private void Next(Panel panel)
+        private void Next(StepBar stepBar)
         {
-            foreach (var stepBar in panel.Children.OfType<StepBar>())
-            {
-                stepBar.Next();
-            }
+
+            //foreach (var stepBar in panel.Children.OfType<StepBar>())
+            //{
+            //    stepBar.Next();
+
+            //}
+            stepBar.Next();
+            
         }
 
-        private void Prev(Panel panel)
+        private void Prev(StepBar stepBar)
         {
-            foreach (var stepBar in panel.Children.OfType<StepBar>())
-            {
-                stepBar.Prev();
-            }
+            //foreach (var stepBar in panel.Children.OfType<StepBar>())
+            //{
+            //    stepBar.Prev();
+            //}
+            stepBar.Prev();
         }
+
+       
 
     }
 }

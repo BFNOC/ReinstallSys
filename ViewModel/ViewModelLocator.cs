@@ -14,6 +14,8 @@ namespace ReinstallSys.ViewModel
             Ioc.Default.ConfigureServices(new ServiceCollection()
                 .AddSingleton<DataService>()
                 .AddTransient<StepBarViewModel>()
+                .AddTransient<BeforDeploymentViewModel>()
+                .AddTransient<SoftwareViewModel>()
                 .BuildServiceProvider());
 
 
@@ -23,5 +25,7 @@ namespace ReinstallSys.ViewModel
         Application.Current.TryFindResource("Locator") as ViewModelLocator).Value;
 
         public static StepBarViewModel StepBar => Ioc.Default.GetRequiredService<StepBarViewModel>();
+        public static BeforDeploymentViewModel BeforDeployment => Ioc.Default.GetRequiredService<BeforDeploymentViewModel>();
+        public static SoftwareViewModel Software => Ioc.Default.GetRequiredService<SoftwareViewModel>();
     }
 }

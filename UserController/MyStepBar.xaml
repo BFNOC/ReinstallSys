@@ -4,17 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             xmlns:local="clr-namespace:ReinstallSys.UserController"
+             xmlns:Interaction="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              DataContext="{Binding StepBar, Source={StaticResource Locator}}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <hc:StepBar Grid.ColumnSpan="2" ItemsSource="{Binding DataList}">
-            <hc:StepBar.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Description}" />
-                </DataTemplate>
-            </hc:StepBar.ItemTemplate>
-        </hc:StepBar>
-    </Grid>
+    <hc:TransitioningContentControl>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition  />
+                <RowDefinition  />
+            </Grid.RowDefinitions>
+
+            <hc:StepBar Grid.Row="0" ItemsSource="{Binding DataList}" Name="StepBar" StepChanged="StepBar_StepChanged">
+                <hc:StepBar.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Description}" />
+                    </DataTemplate>
+                </hc:StepBar.ItemTemplate>
+            </hc:StepBar>
+            <UniformGrid Grid.Row="1">
+                <Button Content="上一步" Command="{Binding PrevCmd}" CommandParameter="{Binding ElementName=StepBar}"/>
+                <Button Content="下一步" Command="{Binding NextCmd}" CommandParameter="{Binding ElementName=StepBar}"/>
+            </UniformGrid>
+        </Grid>
+    </hc:TransitioningContentControl>
 </UserControl>

@@ -13,7 +13,7 @@ namespace ReinstallSys.ViewModel
             //get { return _dataList; }
             //set { _dataList = value; }
             get => _dataList;
-            set => SetProperty(ref this._dataList, value);
+            set => SetProperty(ref _dataList, value);
         }
 
     }
