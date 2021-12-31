@@ -17,7 +17,7 @@
                 <RowDefinition  />
             </Grid.RowDefinitions>
 
-            <hc:StepBar Grid.Row="0" ItemsSource="{Binding DataList}" Name="StepBar" StepChanged="StepBar_StepChanged">
+            <hc:StepBar Grid.Row="0" ItemsSource="{Binding DataList}" Name="StepBar">
                 <hc:StepBar.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Description}" />

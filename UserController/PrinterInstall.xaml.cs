@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace ReinstallSys.UserController
 {
     /// <summary>
-    /// MyStepBar.xaml 的交互逻辑
+    /// PrinterInstall.xaml 的交互逻辑
     /// </summary>
-    public partial class MyStepBar : UserControl
+    public partial class PrinterInstall : UserControl
     {
-        public MyStepBar()
+        public PrinterInstall()
         {
             InitializeComponent();
         }
-
     }
 }

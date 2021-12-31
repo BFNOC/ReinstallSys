@@ -12,7 +12,7 @@ namespace ReinstallSys.ViewModel.Controls
         public SoftwareModel SoftwareDataList
         {
             get => _SoftwareDataList;
-            set => _SoftwareDataList = value;
+            set => SetProperty(ref _SoftwareDataList, value);
         }
     }
 }

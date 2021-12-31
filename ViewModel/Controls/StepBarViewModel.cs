@@ -11,7 +11,6 @@ namespace ReinstallSys.ViewModel.Controls
     {
         public StepBarViewModel(DataService dataService) => DataList = dataService.GetStepBarDataList();
 
-  
         /// <summary>
         ///     下一步
         /// </summary>
@@ -24,26 +23,13 @@ namespace ReinstallSys.ViewModel.Controls
 
         private void Next(StepBar stepBar)
         {
-
-            //foreach (var stepBar in panel.Children.OfType<StepBar>())
-            //{
-            //    stepBar.Next();
-
-            //}
             stepBar.Next();
             
         }
 
         private void Prev(StepBar stepBar)
         {
-            //foreach (var stepBar in panel.Children.OfType<StepBar>())
-            //{
-            //    stepBar.Prev();
-            //}
             stepBar.Prev();
         }
-
-       
-
     }
 }

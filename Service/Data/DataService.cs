@@ -1,5 +1,6 @@
 ﻿using ReinstallSys.Data.Model;
 using System.Collections.Generic;
+using System.Net;
 
 namespace ReinstallSys.Service.Data
 {
@@ -11,27 +12,27 @@ namespace ReinstallSys.Service.Data
             {
                 new StepBarModel
                 {
-                    Header = "步骤",
+                    Header = "1",
                     Description = "部署前准备"
                 },
                 new StepBarModel
                 {
-                    Header = "步骤",
+                    Header = "2",
                     Description = "打印机安装"
                 },
                 new StepBarModel
                 {
-                    Header = "步骤",
+                    Header = "3",
                     Description = "Office安装"
                 },
                 new StepBarModel
                 { 
-                    Header = "步骤",
+                    Header = "4",
                     Description = "软件安装"
                 },
                 new StepBarModel
                 {
-                    Header = "步骤",
+                    Header = "5",
                     Description = "部署完成"
                 }
             };
@@ -62,6 +63,28 @@ namespace ReinstallSys.Service.Data
                     SoftwareDescription = "通讯软件",
                     SoftwareProgressBar = 100
                 }
+            };
+        }
+
+        //TODO: get data from intranet
+        public List<PrinterModel> GetPrinterList()
+        {
+            return new()
+            {
+                new PrinterModel
+                {
+                    PrinterName = "HP M203-M206DN"
+                }
+            };
+        }
+
+        //TODO: get data from intranet
+        public List<PrinterIPModel> GetPrinterIPList()
+        {
+            return new()
+            {
+                new PrinterIPModel 
+                { PrinterIP = IPAddress.Parse("1.1.1.1") }
             };
         }
     }

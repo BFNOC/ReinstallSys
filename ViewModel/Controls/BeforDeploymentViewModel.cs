@@ -11,7 +11,7 @@ namespace ReinstallSys.ViewModel.Controls
         public string Desc
         {
             get => _desc;
-            set => _desc = value;
+            set => SetProperty(ref _desc, value);
         }
         
     }

@@ -16,6 +16,8 @@ namespace ReinstallSys.ViewModel
                 .AddTransient<StepBarViewModel>()
                 .AddTransient<BeforDeploymentViewModel>()
                 .AddTransient<SoftwareViewModel>()
+                .AddTransient<PrinterViewModel>()
+                .AddTransient<PrinterIPViewModel>()
                 .BuildServiceProvider());
 
 
@@ -27,5 +29,7 @@ namespace ReinstallSys.ViewModel
         public static StepBarViewModel StepBar => Ioc.Default.GetRequiredService<StepBarViewModel>();
         public static BeforDeploymentViewModel BeforDeployment => Ioc.Default.GetRequiredService<BeforDeploymentViewModel>();
         public static SoftwareViewModel Software => Ioc.Default.GetRequiredService<SoftwareViewModel>();
+        public static PrinterViewModel Printer => Ioc.Default.GetRequiredService<PrinterViewModel>();
+        public static PrinterIPViewModel PrinterIP => Ioc.Default.GetRequiredService<PrinterIPViewModel>();
     }
 }

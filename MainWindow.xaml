@@ -6,17 +6,24 @@
         xmlns:local="clr-namespace:ReinstallSys" 
         xmlns:usercontrol="clr-namespace:ReinstallSys.UserController"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <usercontrol:MyStepBar Grid.Row="0" x:Name="myStepBar"/>
+
         
-        <Grid x:Name="mainContent" Grid.Row="1">
-            <Button Content="测试" Click="Button_Click"></Button>
-        </Grid>
-        
+           
+        <!--<Viewbox Grid.Row="1" Stretch="Fill">
+            <Canvas x:Name="mainContent" Height="320" Width="520">
+                
+            </Canvas>
+        </Viewbox>-->
+        <UniformGrid x:Name="mainContent" Grid.Row="1">
+            
+        </UniformGrid>
+
     </Grid>
 </Window>

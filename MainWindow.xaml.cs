@@ -1,5 +1,8 @@
-﻿using ReinstallSys.UserController;
+﻿using ReinstallSys.Data.Model;
+using ReinstallSys.Service.Data;
+using ReinstallSys.UserController;
 using ReinstallSys.ViewModel.Main;
+using System.Net;
 using System.Windows;
 
 namespace ReinstallSys
@@ -16,16 +19,35 @@ namespace ReinstallSys
             vm = new MainWindowViewModel();
             DataContext = vm;
             myStepBar.StepBar.StepChanged += StepBar_StepChanged;
+
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
 
         private void StepBar_StepChanged(object sender, HandyControl.Data.FunctionEventArgs<int> e)
         {
-            System.Console.WriteLine("增加事件");
+            mainContent.Children.Clear();
+            foreach (StepBarModel item in myStepBar.StepBar.Items)
+            {
+                if (item.Header == (myStepBar.StepBar.StepIndex + 1).ToString())
+                {
+                    if (item.Description == "部署前准备")
+                    {
+                        mainContent.Children.Add(new BeforeDeployment());
+                    }
+                    else if (item.Description == "打印机安装")
+                    {
+                        mainContent.Children.Add(new PrinterInstall());
+                    }
+                    else if (item.Description == "软件安装")
+                    {
+                        mainContent.Children.Add(new SoftwareInstall());
+                    }
+                }
+            }
+            
+           
+            
+
         }
     }
 }
