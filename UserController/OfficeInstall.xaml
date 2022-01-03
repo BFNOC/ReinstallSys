@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="ReinstallSys.UserController.OfficeInstall"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:local="clr-namespace:ReinstallSys.UserController"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <hc:TransitioningContentControl HorizontalAlignment="Center">
+        <hc:SimpleStackPanel>
+            <Grid Margin="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <RadioButton 
+                        Grid.Column="0"
+                        Margin="0,16,8,0"
+                        Content="使用Microsoft Office"
+                        FontSize="20"
+                        Name="UseMSOffice"
+                        />
+                <RadioButton 
+                        Grid.Column="2"
+                        Margin="0,16,0,0"
+                        Content="使用WPS Office"
+                        FontSize="20"
+                        Checked="RadioButton_Checked"
+                        />
+            </Grid>
+            <hc:SimpleStackPanel
+                Visibility="{Binding ElementName=UseMSOffice, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}, FallbackValue=Hidden}"
+                >
+                <ComboBox 
+                    Name="InstallOfficeVersion"
+                    DataContext="{Binding OfficeInstall, Source={StaticResource Locator}}" 
+                    FontSize="18"
+                    Width="380" 
+                    ItemsSource="{Binding DataList}"
+                    DisplayMemberPath="Name"
+                    hc:InfoElement.TitlePlacement="Top" 
+                    hc:InfoElement.Title="Office版本选择" 
+                    hc:InfoElement.Necessary="True" 
+                    hc:DropDownElement.ConsistentWidth="True"
+                    Style="{StaticResource ComboBoxExtend}"/>
+                <CheckBox 
+                    Name="OfficeUninstallCheckbox"
+                    Margin="20"
+                    FontSize="20" 
+                    Content="是否卸载旧版Office" 
+                    Unchecked="OfficeUninstallCheckbox_Unchecked"
+                    IsChecked="False"/>
+                <ComboBox 
+                    Name="UninstallOfficeVersion"
+                    IsEnabled="{Binding ElementName=OfficeUninstallCheckbox, Path=IsChecked}"
+                    DataContext="{Binding OfficeUninstall, Source={StaticResource Locator}}" 
+                    FontSize="18"
+                    Width="380" 
+                    Margin="0,20,0,0"
+                    ItemsSource="{Binding DataList}"
+                    DisplayMemberPath="Name"
+                    hc:InfoElement.TitlePlacement="Top" 
+                    hc:InfoElement.Title="卸载Office版本选择" 
+                    hc:InfoElement.Necessary="True" 
+                    hc:DropDownElement.ConsistentWidth="True"
+                    Style="{StaticResource ComboBoxExtend}"/>
+                <Button 
+                    Margin="20"
+                    Content="开始执行"
+                    Style="{StaticResource ButtonPrimary}"
+                    Click="Button_Click"
+                    />
+            </hc:SimpleStackPanel>
+
+        </hc:SimpleStackPanel>
+    </hc:TransitioningContentControl>
+</UserControl>

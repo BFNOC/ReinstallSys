@@ -1,6 +1,8 @@
 ﻿using ReinstallSys.Data.Model;
+using ReinstallSys.Tools;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace ReinstallSys.Service.Data
 {
@@ -85,6 +87,38 @@ namespace ReinstallSys.Service.Data
             {
                 new PrinterIPModel 
                 { PrinterIP = IPAddress.Parse("1.1.1.1") }
+            };
+        }
+
+        public List<OfficeInstallModel> GetOfficeInstallList()
+        {
+
+            var list = WebTools.GetOfficeInstallListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/OfficeInstall.json");
+            return list;
+            //return new()
+            //{
+            //    new OfficeInstallModel
+            //    {
+            //        Name = "Office 2010",
+            //        FileURI = "data",
+            //        InstallArguments = "data",
+            //        InstallCommand = "dta"
+            //    }
+
+            //};
+        }
+
+        public List<OfficeUninstallModel> GetOfficeUninstallList()
+        {
+            return new()
+            {
+                new OfficeUninstallModel
+                {
+                    Name = "卸载Office 2010",
+                    FileURL = "xxx",
+                    Uninstall_command = "xxxx",
+                    Uninstall_arguments = "/xxx"
+                }
             };
         }
     }

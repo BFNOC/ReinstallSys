@@ -1,5 +1,6 @@
 ﻿using ReinstallSys.Data.Model;
 using ReinstallSys.Service.Data;
+using ReinstallSys.Tools;
 using ReinstallSys.UserController;
 using ReinstallSys.ViewModel.Main;
 using System.Net;
@@ -19,7 +20,7 @@ namespace ReinstallSys
             vm = new MainWindowViewModel();
             DataContext = vm;
             myStepBar.StepBar.StepChanged += StepBar_StepChanged;
-
+            
         }
 
 
@@ -41,6 +42,10 @@ namespace ReinstallSys
                     else if (item.Description == "软件安装")
                     {
                         mainContent.Children.Add(new SoftwareInstall());
+                    }
+                    else if (item.Description == "Office安装")
+                    {
+                        mainContent.Children.Add(new OfficeInstall());
                     }
                 }
             }

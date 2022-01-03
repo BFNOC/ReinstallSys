@@ -10,8 +10,6 @@ namespace ReinstallSys.ViewModel
 
         public IList<T> DataList
         {
-            //get { return _dataList; }
-            //set { _dataList = value; }
             get => _dataList;
             set => SetProperty(ref _dataList, value);
         }

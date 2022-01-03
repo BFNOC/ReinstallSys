@@ -18,6 +18,8 @@ namespace ReinstallSys.ViewModel
                 .AddTransient<SoftwareViewModel>()
                 .AddTransient<PrinterViewModel>()
                 .AddTransient<PrinterIPViewModel>()
+                .AddTransient<OfficeInstallViewModel>()
+                .AddTransient<OfficeUninstallViewModel>()
                 .BuildServiceProvider());
 
 
@@ -31,5 +33,7 @@ namespace ReinstallSys.ViewModel
         public static SoftwareViewModel Software => Ioc.Default.GetRequiredService<SoftwareViewModel>();
         public static PrinterViewModel Printer => Ioc.Default.GetRequiredService<PrinterViewModel>();
         public static PrinterIPViewModel PrinterIP => Ioc.Default.GetRequiredService<PrinterIPViewModel>();
+        public static OfficeInstallViewModel OfficeInstall => Ioc.Default.GetRequiredService<OfficeInstallViewModel>();
+        public static OfficeUninstallViewModel OfficeUninstall => Ioc.Default.GetRequiredService<OfficeUninstallViewModel>();
     }
 }
