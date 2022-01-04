@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ReinstallSys.UserController"
+             xmlns:local="clr-namespace:ReinstallSys.MyUserControl"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <hc:TransitioningContentControl>
         <UniformGrid Margin="5" Rows="3">
-            <CheckBox Content="{Binding SoftwareName}" />
+            <CheckBox Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SoftwareControl}}, Path=SoftwareName}" />
             <TextBlock   HorizontalAlignment="Left" Text="{Binding SoftwareDescription}" Style="{StaticResource TextBlockDefaultSecLight}" />
             <ProgressBar Style="{StaticResource ProgressBarSuccess}" Value="{Binding SoftwareProgressBar}"/>
         </UniformGrid>

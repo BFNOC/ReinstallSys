@@ -1,24 +1,25 @@
 ﻿using ReinstallSys.Data.Model;
 using ReinstallSys.Service.Data;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using ReinstallSys.Tools;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReinstallSys.ViewModel.Controls
 {
     public class OfficeInstallViewModel : ViewModelBase<OfficeInstallModel>, INotifyPropertyChanged
     {
+        protected string OperatingSystem;
 
-        public OfficeInstallViewModel(DataService dataService) => DataList = dataService.GetOfficeInstallList();
- 
-
-
-
-
+        public OfficeInstallViewModel(DataService dataService)
+        {
+            DataList = dataService.GetOfficeInstallList();
+            OperatingSystem = OSTools.GetOperatingSystemVersion();
+            if (OperatingSystem == "Windows 7")
+            {
+                DataList.Remove(DataList.Single(item => item.Name == "Office 2019"));
+                DataList.Remove(DataList.Single(item => item.Name == "Office 2021"));
+            }
+        }
 
         private string _name;
         private string _fileURI;

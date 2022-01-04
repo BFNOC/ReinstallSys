@@ -5,35 +5,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muc="clr-namespace:ReinstallSys.MyUserControl"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             DataContext="{Binding Software, Source={StaticResource Locator}}"
              mc:Ignorable="d" 
             >
     <hc:TransitioningContentControl>
         <hc:ScrollViewer>
             <hc:SimpleStackPanel>
-                <hc:SimpleStackPanel>
+                
                     <TextBlock FontSize="18" Text="test:" />
                     <hc:WaterfallPanel Groups="8">
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
+                    <ItemsControl ItemsSource="{Binding DataList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <muc:SoftwareControl SoftwareName="{Binding Path=Name}" SoftwareDescription="通信" SoftwareProgressBar="40"/>
+                                
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+
                     </hc:WaterfallPanel>
-                </hc:SimpleStackPanel>
-                <hc:SimpleStackPanel>
-                    <TextBlock FontSize="18" Text="test:" />
-                    <hc:WaterfallPanel Groups="6">
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                        <muc:SoftwareControl SoftwareName="QQ" SoftwareDescription="通信" SoftwareProgressBar="40" />
-                    </hc:WaterfallPanel>
-                </hc:SimpleStackPanel>
+
+                
                 <Button Margin="0,10,0,10" Content="安装开始" Style="{StaticResource ButtonPrimary}" />
             </hc:SimpleStackPanel>
         </hc:ScrollViewer>

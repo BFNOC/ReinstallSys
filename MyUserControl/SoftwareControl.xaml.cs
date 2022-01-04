@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace ReinstallSys.MyUserControl
 {
@@ -10,10 +11,17 @@ namespace ReinstallSys.MyUserControl
         public SoftwareControl()
         {
             InitializeComponent();
-            this.DataContext = this;
         }
 
-        public string SoftwareName { get; set; }
+        public static readonly DependencyProperty SoftwareNameProperty = DependencyProperty.Register(
+            "SoftwareName", typeof(string), typeof(SoftwareControl));
+            
+
+        public string SoftwareName 
+        {
+            get => (string)GetValue(SoftwareNameProperty);
+            set => SetValue(SoftwareNameProperty, value);
+        }
 
         public string SoftwareDescription { get; set; }
 

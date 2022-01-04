@@ -21,11 +21,10 @@ namespace ReinstallSys.UserController
     /// </summary>
     public partial class OfficeInstall : UserControl
     {
-        protected string OperatingSystem; 
+        
         public OfficeInstall()
         {
             InitializeComponent();
-            OperatingSystem = OSTools.GetOperatingSystemVersion();
         }
 
         private void OfficeUninstallCheckbox_Unchecked(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,6 +10,7 @@ namespace ReinstallSys.Data.Model
 {
     public class PrinterIPModel
     {
-        public IPAddress PrinterIP { get; set; }
+        [JsonProperty("printer_ip")]
+        public string PrinterIP { get; set; }
     }
 }

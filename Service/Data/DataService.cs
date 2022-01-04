@@ -57,37 +57,20 @@ namespace ReinstallSys.Service.Data
 
         public List<SoftwareModel> GetSoftwaresList()
         {
-            return new()
-            {
-                new SoftwareModel
-                {
-                    SoftwareName = "QQ",
-                    SoftwareDescription = "通讯软件",
-                    SoftwareProgressBar = 100
-                }
-            };
+            var list = WebTools.GetSoftwareListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/Software.json");
+            return list;
         }
 
-        //TODO: get data from intranet
         public List<PrinterModel> GetPrinterList()
         {
-            return new()
-            {
-                new PrinterModel
-                {
-                    PrinterName = "HP M203-M206DN"
-                }
-            };
+            var list = WebTools.GetPrinterListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/Printer.json");
+            return list;
         }
 
-        //TODO: get data from intranet
         public List<PrinterIPModel> GetPrinterIPList()
         {
-            return new()
-            {
-                new PrinterIPModel 
-                { PrinterIP = IPAddress.Parse("1.1.1.1") }
-            };
+            var list = WebTools.GetPrinterIPListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/PrinterIP.json");
+            return list;
         }
 
         public List<OfficeInstallModel> GetOfficeInstallList()
@@ -95,17 +78,6 @@ namespace ReinstallSys.Service.Data
 
             var list = WebTools.GetOfficeInstallListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/OfficeInstall.json");
             return list;
-            //return new()
-            //{
-            //    new OfficeInstallModel
-            //    {
-            //        Name = "Office 2010",
-            //        FileURI = "data",
-            //        InstallArguments = "data",
-            //        InstallCommand = "dta"
-            //    }
-
-            //};
         }
 
         public List<OfficeUninstallModel> GetOfficeUninstallList()

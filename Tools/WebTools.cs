@@ -19,6 +19,7 @@ namespace ReinstallSys.Tools
             try
             {
                 var client = new WebClient();
+                client.Encoding = Encoding.UTF8;
                 var data = client.DownloadString(url);
                 return data;
             }
@@ -38,7 +39,7 @@ namespace ReinstallSys.Tools
         }
         
 
-        public static  FTPModel GetFTPFromWeb(string url)
+        public static FTPModel GetFTPFromWeb(string url)
         {
             var data = GetJSONFromUrl(url);
             var output = JsonConvert.DeserializeObject<FTPModel>(data);
@@ -49,6 +50,25 @@ namespace ReinstallSys.Tools
         {
             var data = GetJSONFromUrl(url);
             var output = JsonConvert.DeserializeObject<List<OfficeInstallModel>>(data);
+            return output;
+        }
+        public static List<PrinterModel> GetPrinterListFromWeb(string url)
+        {
+            var data = GetJSONFromUrl(url);
+            var output = JsonConvert.DeserializeObject<List<PrinterModel>>(data);
+            return output;
+        }
+        public static List<PrinterIPModel> GetPrinterIPListFromWeb(string url)
+        {
+            var data = GetJSONFromUrl(url);
+            var output = JsonConvert.DeserializeObject<List<PrinterIPModel>>(data);
+            return output;
+        }
+
+        public static List<SoftwareModel> GetSoftwareListFromWeb(string url)
+        {
+            var data = GetJSONFromUrl(url);
+            var output = JsonConvert.DeserializeObject<List<SoftwareModel>>(data);
             return output;
         }
     }
