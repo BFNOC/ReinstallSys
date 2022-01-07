@@ -15,7 +15,14 @@ namespace ReinstallSys.MyUserControl
 
         public static readonly DependencyProperty SoftwareNameProperty = DependencyProperty.Register(
             "SoftwareName", typeof(string), typeof(SoftwareControl));
-            
+
+        public static readonly DependencyProperty SoftwareDescriptionProperty = DependencyProperty.Register(
+            "SoftwareDescription", typeof(string), typeof(SoftwareControl));
+
+        public static readonly DependencyProperty SoftwareProgressBarProperty = DependencyProperty.Register(
+            "SoftwareProgressBar", typeof(int), typeof(SoftwareControl));
+
+
 
         public string SoftwareName 
         {
@@ -23,8 +30,16 @@ namespace ReinstallSys.MyUserControl
             set => SetValue(SoftwareNameProperty, value);
         }
 
-        public string SoftwareDescription { get; set; }
+        public string SoftwareDescription 
+        {
+            get => (string)GetValue(SoftwareDescriptionProperty);
+            set => SetValue(SoftwareDescriptionProperty, value);
+        }
 
-        public int SoftwareProgressBar { get; set; }
+        public int SoftwareProgressBar 
+        {
+            get => (int)GetValue(SoftwareProgressBarProperty);
+            set => SetValue(SoftwareProgressBarProperty, value);
+        }
     }
 }

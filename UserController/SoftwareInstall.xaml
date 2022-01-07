@@ -13,18 +13,24 @@
             <hc:SimpleStackPanel>
                 
                     <TextBlock FontSize="18" Text="test:" />
-                    <hc:WaterfallPanel Groups="8">
+                    
+                    
                     <ItemsControl ItemsSource="{Binding DataList}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <muc:SoftwareControl SoftwareName="{Binding Path=Name}" SoftwareDescription="通信" SoftwareProgressBar="40"/>
-                                
+                                <muc:SoftwareControl SoftwareName="{Binding Path=Name}" SoftwareDescription="{Binding Path=Description}" SoftwareProgressBar="{Binding Path=SoftwareProgressBar}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        </ItemsControl>
                     
 
-                    </hc:WaterfallPanel>
+
+               
 
                 
                 <Button Margin="0,10,0,10" Content="安装开始" Style="{StaticResource ButtonPrimary}" />

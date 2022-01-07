@@ -34,8 +34,7 @@ namespace ReinstallSys.UserController
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine(OperatingSystem);
-            var json = WebTools.GetOfficeInstallListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/OfficeInstall.json");
+            MessageBox.Show(OSTools.CheckWhetherSystemIsLTSC2021().ToString());
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)

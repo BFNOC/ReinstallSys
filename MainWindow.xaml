@@ -13,14 +13,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <usercontrol:MyStepBar Grid.Row="0" x:Name="myStepBar"/>
-
-        
-           
-        <!--<Viewbox Grid.Row="1" Stretch="Fill">
-            <Canvas x:Name="mainContent" Height="320" Width="520">
-                
-            </Canvas>
-        </Viewbox>-->
         <UniformGrid x:Name="mainContent" Grid.Row="1">
             
         </UniformGrid>

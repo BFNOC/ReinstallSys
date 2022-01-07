@@ -9,9 +9,15 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <hc:TransitioningContentControl>
         <UniformGrid Margin="5" Rows="3">
-            <CheckBox Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SoftwareControl}}, Path=SoftwareName}" />
-            <TextBlock   HorizontalAlignment="Left" Text="{Binding SoftwareDescription}" Style="{StaticResource TextBlockDefaultSecLight}" />
-            <ProgressBar Style="{StaticResource ProgressBarSuccess}" Value="{Binding SoftwareProgressBar}"/>
+            <CheckBox 
+                Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SoftwareControl}}, Path=SoftwareName}" />
+            <TextBlock 
+                HorizontalAlignment="Left" 
+                Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SoftwareControl}}, Path=SoftwareDescription}" 
+                Style="{StaticResource TextBlockDefaultSecLight}" />
+            <ProgressBar 
+                Style="{StaticResource ProgressBarSuccess}" 
+                Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SoftwareControl}}, Path=SoftwareProgressBar}"/>
         </UniformGrid>
     </hc:TransitioningContentControl>
 </UserControl>

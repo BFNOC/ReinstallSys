@@ -124,6 +124,7 @@
     <Compile Include="Data\Model\SoftwareModel.cs" />
     <Compile Include="Data\Model\StepBarModel.cs" />
     <Compile Include="Service\Data\DataService.cs" />
+    <Compile Include="Tools\CMDTools.cs" />
     <Compile Include="Tools\OSTools.cs" />
     <Compile Include="Tools\WebTools.cs" />
     <Compile Include="UserController\BeforeDeployment.xaml.cs">

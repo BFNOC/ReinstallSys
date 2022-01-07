@@ -7,11 +7,13 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d" 
              DataContext="{Binding BeforDeployment, Source={StaticResource Locator}}" 
+             Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <StackPanel>
         <hc:LoadingLine Margin="0,30" Foreground="BlueViolet" Style="{StaticResource LoadingLineLarge}"/>
         <TextBlock  Text="{Binding DataList[0].Description}" HorizontalAlignment="Center" FontSize="24px" />
         <TextBlock  Text="{Binding DataList[1].Description}" HorizontalAlignment="Center" FontSize="24px" />
+        <TextBox x:Name="SC" Text="{Binding Path=Desc, NotifyOnTargetUpdated=True}"  HorizontalAlignment="Center" FontSize="24px" IsReadOnly="True" />
     </StackPanel>
 </UserControl>

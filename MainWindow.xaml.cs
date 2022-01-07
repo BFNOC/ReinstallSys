@@ -5,6 +5,7 @@ using ReinstallSys.UserController;
 using ReinstallSys.ViewModel.Main;
 using System.Net;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ReinstallSys
 {
@@ -14,6 +15,7 @@ namespace ReinstallSys
     public partial class MainWindow : Window
     {
         private MainWindowViewModel vm;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -23,6 +25,7 @@ namespace ReinstallSys
             
         }
 
+        
 
         private void StepBar_StepChanged(object sender, HandyControl.Data.FunctionEventArgs<int> e)
         {
@@ -33,7 +36,9 @@ namespace ReinstallSys
                 {
                     if (item.Description == "部署前准备")
                     {
-                        mainContent.Children.Add(new BeforeDeployment());
+                        var n = new BeforeDeployment();
+                        n.SC.TextChanged += SC_TextChanged;
+                        mainContent.Children.Add(n);
                     }
                     else if (item.Description == "打印机安装")
                     {
@@ -49,10 +54,14 @@ namespace ReinstallSys
                     }
                 }
             }
-            
-           
-            
+        }
 
+        private void SC_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if ((sender as TextBox).Text == "即将进入下一步")
+            {
+                myStepBar.StepBar.Next();
+            }
         }
     }
 }
