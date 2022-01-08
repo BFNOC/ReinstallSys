@@ -5,10 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d" 
-             
+             DataContext="{Binding Printer,Source={StaticResource Locator}}"
              d:DesignHeight="450" d:DesignWidth="800">
     <hc:TransitioningContentControl>
         <hc:SimpleStackPanel>
+            <CheckBox 
+                Content="是否移除所有旧打印机" 
+                FontSize="20"
+                IsChecked="{Binding HasRemoveAllPrinter}" 
+                HorizontalAlignment="Center"/>
             <ComboBox 
                 DataContext="{Binding Printer, Source={StaticResource Locator}}" 
                 FontSize="18"
@@ -32,11 +37,13 @@
                 hc:InfoElement.Necessary="True" 
                 hc:DropDownElement.ConsistentWidth="True"
                 Style="{StaticResource ComboBoxExtend}"/>
+            <TextBlock x:Name="ls" />
             <Button 
                 Margin="20"
                 Content="开始安装打印机"
                 Style="{StaticResource ButtonPrimary}"
-                />
+                Command="{Binding Delete}"
+              />
         </hc:SimpleStackPanel>
     </hc:TransitioningContentControl>
 </UserControl>

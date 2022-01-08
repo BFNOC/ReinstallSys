@@ -35,14 +35,14 @@ namespace ReinstallSys.UserController
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LTSC2021 = OSTools.CheckWhetherSystemIsLTSC2021();
-            if (LTSC2021)
-            {
-                foreach (var i in MSVCLibs)
-                {
-                    SC.Text = "正在进行第" + (MSVCLibs.IndexOf(i) + 1).ToString() + "项/共" + MSVCLibs.Count.ToString() + "项";
-                    await CMDTools.SCAsync("powershell Add-AppxPackage " + i);
-                }
-            }
+            //if (LTSC2021)
+            //{
+            //    foreach (var i in MSVCLibs)
+            //    {
+            //        SC.Text = "正在进行第" + (MSVCLibs.IndexOf(i) + 1).ToString() + "项/共" + MSVCLibs.Count.ToString() + "项";
+            //        await CMDTools.SCAsync("powershell Add-AppxPackage " + i);
+            //    }
+            //}
             SC.Text = "即将进入下一步";
             
         }

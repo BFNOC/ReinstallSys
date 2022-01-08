@@ -83,6 +83,7 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -123,9 +124,14 @@
     <Compile Include="Data\Model\PrinterModel.cs" />
     <Compile Include="Data\Model\SoftwareModel.cs" />
     <Compile Include="Data\Model\StepBarModel.cs" />
+    <Compile Include="MyUserControl\TextDialog.xaml.cs">
+      <DependentUpon>TextDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service\Data\DataService.cs" />
+    <Compile Include="Structures\PRINTER_DEFAULTS.cs" />
     <Compile Include="Tools\CMDTools.cs" />
     <Compile Include="Tools\OSTools.cs" />
+    <Compile Include="Tools\PrinterTools.cs" />
     <Compile Include="Tools\WebTools.cs" />
     <Compile Include="UserController\BeforeDeployment.xaml.cs">
       <DependentUpon>BeforeDeployment.xaml</DependentUpon>
@@ -167,6 +173,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MyUserControl\TextDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserController\BeforeDeployment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,6 +242,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
