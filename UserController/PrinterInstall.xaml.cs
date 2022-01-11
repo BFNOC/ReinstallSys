@@ -16,5 +16,10 @@ namespace ReinstallSys.UserController
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            PrinterTools.AddMonitorPrinterPort("172.28.56.240", "172.28.56.240", "Standard TCP/IP Port");
+        }
     }
 }

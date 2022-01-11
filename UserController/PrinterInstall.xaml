@@ -15,7 +15,7 @@
                 IsChecked="{Binding HasRemoveAllPrinter}" 
                 HorizontalAlignment="Center"/>
             <ComboBox 
-                DataContext="{Binding Printer, Source={StaticResource Locator}}" 
+                SelectedItem="{Binding SelectedItem}"
                 FontSize="18"
                 Width="380" 
                 ItemsSource="{Binding DataList}"
@@ -24,7 +24,7 @@
                 hc:InfoElement.Title="打印机型号" 
                 hc:InfoElement.Necessary="True" 
                 hc:DropDownElement.ConsistentWidth="True"
-                Style="{StaticResource ComboBoxExtend}"/>
+                Style="{StaticResource ComboBoxExtend}" />
             <ComboBox 
                 DataContext="{Binding PrinterIP, Source={StaticResource Locator}}" 
                 FontSize="18"
@@ -42,7 +42,13 @@
                 Margin="20"
                 Content="开始安装打印机"
                 Style="{StaticResource ButtonPrimary}"
-                Command="{Binding Delete}"
+                Command="{Binding StartInstallPrinter}"
+              />
+            <Button 
+                Margin="20"
+                Content="Add Port"
+                Style="{StaticResource ButtonPrimary}"
+                Click="Button_Click"
               />
         </hc:SimpleStackPanel>
     </hc:TransitioningContentControl>

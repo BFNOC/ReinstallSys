@@ -128,6 +128,7 @@
       <DependentUpon>TextDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\Data\DataService.cs" />
+    <Compile Include="Structures\PORT_DATA_1.cs" />
     <Compile Include="Structures\PRINTER_DEFAULTS.cs" />
     <Compile Include="Tools\CMDTools.cs" />
     <Compile Include="Tools\OSTools.cs" />

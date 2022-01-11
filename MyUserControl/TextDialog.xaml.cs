@@ -20,9 +20,10 @@ namespace ReinstallSys.MyUserControl
     /// </summary>
     public partial class TextDialog : UserControl
     {
-        public TextDialog()
+        public TextDialog(string info)
         {
             InitializeComponent();
+            textBlock.Text = info;
         }
     }
 }

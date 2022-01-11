@@ -35,6 +35,7 @@ namespace ReinstallSys.UserController
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LTSC2021 = OSTools.CheckWhetherSystemIsLTSC2021();
+            //TODO : 最后要取消注释
             //if (LTSC2021)
             //{
             //    foreach (var i in MSVCLibs)
