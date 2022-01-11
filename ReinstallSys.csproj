@@ -56,6 +56,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Downloader, Version=2.3.1.0, Culture=neutral, PublicKeyToken=844973e732f6cdf4, processorArchitecture=MSIL">
+      <HintPath>packages\Downloader.2.3.1\lib\net452\Downloader.dll</HintPath>
+    </Reference>
     <Reference Include="HandyControl, Version=3.3.0.0, Culture=neutral, PublicKeyToken=45be8712787a1e5b, processorArchitecture=MSIL">
       <HintPath>packages\HandyControl.3.3.0\lib\net472\HandyControl.dll</HintPath>
     </Reference>
@@ -84,6 +87,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -91,6 +95,7 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -128,8 +133,10 @@
       <DependentUpon>TextDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\Data\DataService.cs" />
+    <Compile Include="Structures\DRIVER_INFO_1.cs" />
     <Compile Include="Structures\PORT_DATA_1.cs" />
     <Compile Include="Structures\PRINTER_DEFAULTS.cs" />
+    <Compile Include="Structures\PRINTER_INFO_2.cs" />
     <Compile Include="Tools\CMDTools.cs" />
     <Compile Include="Tools\OSTools.cs" />
     <Compile Include="Tools\PrinterTools.cs" />

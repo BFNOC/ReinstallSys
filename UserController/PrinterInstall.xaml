@@ -26,6 +26,7 @@
                 hc:DropDownElement.ConsistentWidth="True"
                 Style="{StaticResource ComboBoxExtend}" />
             <ComboBox 
+                SelectedItem="{Binding DataContext.PrinterIPselectedItem, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 DataContext="{Binding PrinterIP, Source={StaticResource Locator}}" 
                 FontSize="18"
                 Width="380" 
@@ -50,6 +51,7 @@
                 Style="{StaticResource ButtonPrimary}"
                 Click="Button_Click"
               />
+            <TextBlock x:Name="test" />
         </hc:SimpleStackPanel>
     </hc:TransitioningContentControl>
 </UserControl>

@@ -50,6 +50,8 @@ namespace ReinstallSys.Tools
         static extern int OpenPrinter(string pPrinterName, out IntPtr phPrinter, ref PRINTER_DEFAULTS pDefault);
         [DllImport("winspool.drv", EntryPoint = "ClosePrinter")]
         private static extern int ClosePrinter(IntPtr hPrinter);
+        [DllImport("winspool.drv", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool EnumPrinterDrivers(String pName, String pEnvironment, uint level, IntPtr pDriverInfo, uint cdBuf, ref uint pcbNeeded, ref uint pcRetruned);
         /**
          * Printer_ACCESS
          */
@@ -74,6 +76,11 @@ namespace ReinstallSys.Tools
             uint cbOutputData,
             out uint pcbOutputNeeded,
             out uint pwdStatus);
+
+        [DllImport("winspool.drv", SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern bool GetPrinterDriverDirectory(StringBuilder pName, StringBuilder pEnv, int Level, [Out] StringBuilder outPath, int bufferSize, ref int Bytes);
+        [DllImport("winspool.drv", SetLastError = false, CharSet = CharSet.Auto)]
+        public static extern int InstallPrinterDriverFromPackage([Optional] string pszServer, [Optional] string pszInfPath, string pszDriverName, [Optional] string pszEnvironment, uint dwFlags);
 
 
         public static List<IntPtr> GetPrinterIntPtrList()
@@ -109,6 +116,7 @@ namespace ReinstallSys.Tools
         /// <param name="portName"></param>
         /// <param name="IPAddress"></param>
         /// <param name="portType">example:Standard TCP/IP Port</param>
+        /// EXAMPLE:AddMonitorPrinterPort("172.28.56.240", "172.28.56.240", "Standard TCP/IP Port");
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
         public static bool AddMonitorPrinterPort(string portName, string IPAddress, string portType)
@@ -186,6 +194,41 @@ namespace ReinstallSys.Tools
             Marshal.FreeHGlobal(portPtr);
 
             return (int)xcvResult;
+        }
+
+        public static string GetPrinterDirectory()
+        {
+            StringBuilder str = new(1024);
+            int i = 0;
+            GetPrinterDriverDirectory(null, null, 1, str, 1024, ref i);
+
+            return str.ToString();
+        }
+
+        public static DRIVER_INFO_1[] EnumPrinterDrivers()
+        {
+            uint cbNeeded = 0, cReturned = 0;
+            IntPtr intPtr = new(512);
+            bool ret = EnumPrinterDrivers(null, null, 1, intPtr, 0, ref cbNeeded, ref cReturned);
+            IntPtr pAddr = Marshal.AllocHGlobal((int)cbNeeded);
+            ret = EnumPrinterDrivers(null, null, 1, pAddr, cbNeeded, ref cbNeeded, ref cReturned);
+            if (ret)
+            {
+                DRIVER_INFO_1[] info1 = new DRIVER_INFO_1[cReturned];
+                int offset = pAddr.ToInt32();
+                for (int i = 0; i < cReturned; i++)
+                {
+                    info1[i].pName = Marshal.PtrToStringAuto(Marshal.ReadIntPtr(new IntPtr(offset)));
+                    offset += 4;
+                }
+                Marshal.FreeHGlobal(pAddr);
+                return info1;
+            }
+            else
+            {
+                return new DRIVER_INFO_1[0];
+            }
+           
         }
     }
 }
