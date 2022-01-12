@@ -2,6 +2,7 @@
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using ReinstallSys.Service.Data;
 using ReinstallSys.ViewModel.Controls;
+using ReinstallSys.ViewModel.Controls.PrinterViewModel;
 using System;
 using System.Windows;
 
@@ -16,10 +17,12 @@ namespace ReinstallSys.ViewModel
                 .AddTransient<StepBarViewModel>()
                 .AddTransient<BeforDeploymentViewModel>()
                 .AddTransient<SoftwareViewModel>()
-                .AddTransient<PrinterViewModel>()
-                .AddTransient<PrinterIPViewModel>()
+                .AddTransient<PrinterEasyModelViewModel>()
+                .AddTransient<PrinterAdvanceModelViewModel>()
+                .AddTransient<PrinterCustomModelViewModel>()
                 .AddTransient<OfficeInstallViewModel>()
                 .AddTransient<OfficeUninstallViewModel>()
+                .AddTransient<PrinterRootViewModel>()
                 .BuildServiceProvider());
 
 
@@ -31,9 +34,12 @@ namespace ReinstallSys.ViewModel
         public static StepBarViewModel StepBar => Ioc.Default.GetRequiredService<StepBarViewModel>();
         public static BeforDeploymentViewModel BeforDeployment => Ioc.Default.GetRequiredService<BeforDeploymentViewModel>();
         public static SoftwareViewModel Software => Ioc.Default.GetRequiredService<SoftwareViewModel>();
-        public static PrinterViewModel Printer => Ioc.Default.GetRequiredService<PrinterViewModel>();
-        public static PrinterIPViewModel PrinterIP => Ioc.Default.GetRequiredService<PrinterIPViewModel>();
+        public static PrinterEasyModelViewModel PrinterEasyModel => Ioc.Default.GetRequiredService<PrinterEasyModelViewModel>();
+        public static PrinterAdvanceModelViewModel PrinterAdvanceModel => Ioc.Default.GetRequiredService<PrinterAdvanceModelViewModel>();
+        public static PrinterCustomModelViewModel PrinterCustomModel => Ioc.Default.GetRequiredService<PrinterCustomModelViewModel>();
+        public static PrinterRootViewModel PrinterRoot => Ioc.Default.GetRequiredService<PrinterRootViewModel>();
         public static OfficeInstallViewModel OfficeInstall => Ioc.Default.GetRequiredService<OfficeInstallViewModel>();
         public static OfficeUninstallViewModel OfficeUninstall => Ioc.Default.GetRequiredService<OfficeUninstallViewModel>();
+        
     }
 }

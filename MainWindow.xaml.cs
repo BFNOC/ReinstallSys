@@ -42,7 +42,8 @@ namespace ReinstallSys
                     }
                     else if (item.Description == "打印机安装")
                     {
-                        mainContent.Children.Add(new PrinterInstall());
+                        //mainContent.Children.Add(new PrinterInstall());
+                        mainContent.Children.Add(new PrinterRootInstall());
                     }
                     else if (item.Description == "软件安装")
                     {

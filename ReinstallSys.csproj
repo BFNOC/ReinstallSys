@@ -125,10 +125,24 @@
     <Compile Include="Data\Model\MainWindowModel.cs" />
     <Compile Include="Data\Model\OfficeInstallModel.cs" />
     <Compile Include="Data\Model\OfficeUninstallModel.cs" />
-    <Compile Include="Data\Model\PrinterIPModel.cs" />
-    <Compile Include="Data\Model\PrinterModel.cs" />
+    <Compile Include="Data\Model\PrinterModel\PrinterModel.cs" />
+    <Compile Include="Data\Model\PrinterModel\PrinterUserControlModel.cs" />
     <Compile Include="Data\Model\SoftwareModel.cs" />
     <Compile Include="Data\Model\StepBarModel.cs" />
+    <Compile Include="Service\MyEnum\EnumService.cs" />
+    <Compile Include="UserController\PrinterRootInstall.xaml.cs">
+      <DependentUpon>PrinterRootInstall.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserController\Printer\PrinterCustomModelUserControl.xaml.cs">
+      <DependentUpon>PrinterCustomModelUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserController\Printer\PrinterEasyModelUserControl.xaml.cs">
+      <DependentUpon>PrinterEasyModelUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Controls\PrinterRootViewModel.cs" />
+    <Compile Include="UserController\Printer\PrinterAdvancedModeUserControl.xaml.cs">
+      <DependentUpon>PrinterAdvancedModeUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyUserControl\TextDialog.xaml.cs">
       <DependentUpon>TextDialog.xaml</DependentUpon>
     </Compile>
@@ -153,17 +167,15 @@
     <Compile Include="UserController\OfficeInstall.xaml.cs">
       <DependentUpon>OfficeInstall.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserController\PrinterInstall.xaml.cs">
-      <DependentUpon>PrinterInstall.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserController\SoftwareInstall.xaml.cs">
       <DependentUpon>SoftwareInstall.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Controls\BeforDeploymentViewModel.cs" />
     <Compile Include="ViewModel\Controls\OfficeInstallViewModel.cs" />
     <Compile Include="ViewModel\Controls\OfficeUninstallViewModel.cs" />
-    <Compile Include="ViewModel\Controls\PrinterIPViewModel.cs" />
-    <Compile Include="ViewModel\Controls\PrinterViewModel.cs" />
+    <Compile Include="ViewModel\Controls\PrinterViewModel\PrinterAdvanceModelViewModel.cs" />
+    <Compile Include="ViewModel\Controls\PrinterViewModel\PrinterCustomModelViewModel.cs" />
+    <Compile Include="ViewModel\Controls\PrinterViewModel\PrinterEasyModelViewModel.cs" />
     <Compile Include="ViewModel\Controls\SoftwareViewModel.cs" />
     <Compile Include="ViewModel\Controls\StepBarViewModel.cs" />
     <Compile Include="ViewModel\Main\MainWindowViewModel.cs" />
@@ -181,6 +193,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserController\PrinterRootInstall.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserController\Printer\PrinterAdvancedModeUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MyUserControl\TextDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -201,7 +221,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserController\PrinterInstall.xaml">
+    <Page Include="UserController\Printer\PrinterCustomModelUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserController\Printer\PrinterEasyModelUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -253,5 +277,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

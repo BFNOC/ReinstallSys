@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="ReinstallSys.UserController.PrinterRootInstall"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReinstallSys.UserController"
+             mc:Ignorable="d" 
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:vm="clr-namespace:ReinstallSys.ViewModel.Controls.PrinterViewModel"
+             xmlns:vmp="clr-namespace:ReinstallSys.UserController.Printer"
+             DataContext="{Binding PrinterRoot, Source={StaticResource Locator}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:PrinterAdvanceModelViewModel}">
+            <vmp:PrinterAdvancedModelUserControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PrinterEasyModelViewModel}">
+            <vmp:PrinterEasyModelUserControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PrinterCustomModelViewModel}">
+            <vmp:PrinterCustomModelUserControl />
+        </DataTemplate>
+    </UserControl.Resources>
+    <hc:TransitioningContentControl>
+        <hc:SimpleStackPanel HorizontalAlignment="Center" >
+            <ItemsControl ItemsSource="{Binding DataList}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <hc:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton 
+                        Margin="30,0,30,0" 
+                        Content="{Binding Name}" 
+                        Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type UserControl}},Path=DataContext.checkedq}" 
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},Path=Content}"
+                        FontSize="26"
+                        GroupName="PrinterRoot"
+                        />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <ContentControl Margin="0,30,0,0" Content="{Binding Content}" />
+            
+        </hc:SimpleStackPanel>
+
+
+    </hc:TransitioningContentControl>
+    
+</UserControl>

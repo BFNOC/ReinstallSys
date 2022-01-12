@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReinstallSys.Data.Model;
+using ReinstallSys.Data.Model.PrinterModel;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -56,12 +57,6 @@ namespace ReinstallSys.Tools
         {
             var data = GetJSONFromUrl(url);
             var output = JsonConvert.DeserializeObject<List<PrinterModel>>(data);
-            return output;
-        }
-        public static List<PrinterIPModel> GetPrinterIPListFromWeb(string url)
-        {
-            var data = GetJSONFromUrl(url);
-            var output = JsonConvert.DeserializeObject<List<PrinterIPModel>>(data);
             return output;
         }
 

@@ -1,6 +1,7 @@
 ﻿using HandyControl.Controls;
 using Microsoft.Toolkit.Mvvm.Input;
 using ReinstallSys.Data.Model;
+using ReinstallSys.Data.Model.PrinterModel;
 using ReinstallSys.MyUserControl;
 using ReinstallSys.Service.Data;
 using ReinstallSys.Tools;
@@ -16,14 +17,30 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace ReinstallSys.ViewModel.Controls
+namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
 {
-    public class PrinterViewModel : ViewModelBase<PrinterModel>
+    public class PrinterAdvanceModelViewModel : ViewModelBase<PrinterModel>
     {
-        public PrinterViewModel(DataService dataService) => DataList = dataService.GetPrinterList();
+        public PrinterAdvanceModelViewModel(DataService dataService) 
+        {
+            DataList = dataService.GetPrinterList();
+            PrinterIP = dataService.GetPrinterIPList();
+        }
         public List<IntPtr> PrinterList = new();
 
+        private List<string> _printerIP;
+        public List<string> PrinterIP
+        {
+            get => _printerIP;
+            set => SetProperty(ref _printerIP, value);
+        }
 
+        private string _printerIPselectedItem;
+        public string PrinterIPselectedItem
+        {
+            get => _printerIPselectedItem;
+            set => SetProperty(ref _printerIPselectedItem, value);
+        }
         private bool _hasRemoveAllPrinter = false;
         public bool HasRemoveAllPrinter
         { 
@@ -38,12 +55,7 @@ namespace ReinstallSys.ViewModel.Controls
             set => SetProperty(ref _selectedItem, value);
         }
 
-        private PrinterIPModel _printerIPselectedItem;
-        public PrinterIPModel PrinterIPselectedItem
-        {
-            get => _printerIPselectedItem;
-            set => SetProperty(ref _printerIPselectedItem, value);
-        }
+      
 
         public RelayCommand<FrameworkElement> ShowTextCmd => new(ShowText);
 

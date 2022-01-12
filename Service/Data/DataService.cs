@@ -1,5 +1,8 @@
 ﻿using ReinstallSys.Data.Model;
+using ReinstallSys.Data.Model.PrinterModel;
+using ReinstallSys.Service.MyEnum;
 using ReinstallSys.Tools;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -67,10 +70,16 @@ namespace ReinstallSys.Service.Data
             return list;
         }
 
-        public List<PrinterIPModel> GetPrinterIPList()
+        public List<string> GetPrinterIPList()
         {
-            var list = WebTools.GetPrinterIPListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/PrinterIP.json");
-            return list;
+            var list = WebTools.GetPrinterListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/Printer.json");
+            Console.WriteLine(list);
+            List<string> IPList = new();
+            foreach (var item in list)
+            {
+                IPList.Add(item.PrinterIP);
+            }
+            return IPList;
         }
 
         public List<OfficeInstallModel> GetOfficeInstallList()
@@ -93,5 +102,16 @@ namespace ReinstallSys.Service.Data
                 }
             };
         }
+
+        public List<PrinterUserControlModel> GetPrinterUserControlList()
+        {
+            List<PrinterUserControlModel> list = new();
+            foreach (var i in Enum.GetNames(typeof(EnumService.PrinterRootEnum)))
+            {
+                list.Add(new PrinterUserControlModel() { Name = i.ToString() });
+            }
+            return list;
+        }
+
     }
 }
