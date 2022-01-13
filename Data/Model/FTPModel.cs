@@ -10,13 +10,11 @@ namespace ReinstallSys.Data.Model
 {
     public class FTPModel
     {
-        
-        
         private string _ftp_address;
         private string _office_username;
         private string _office_password;
-        private string _KMS_username;
-        private string _KMS_password;
+        private string _printer_username;
+        private string _printer_password;
 
         [JsonProperty("ftp_address")]
         public string FTPAddress
@@ -36,17 +34,17 @@ namespace ReinstallSys.Data.Model
             get { return _office_password; }
             set { _office_password = value; }
         }
-        [JsonProperty("KMS_username")]
-        public string KMSUsername
+        [JsonProperty("printer_username")]
+        public string PrinterUsername
         { 
-            get { return _KMS_username; }
-            set { _KMS_username = value; }
+            get { return _printer_username; }
+            set { _printer_username = value; }
         }
-        [JsonProperty("KMS_password")]
-        public string KMSPassword
+        [JsonProperty("printer_password")]
+        public string PrinterPassword
         {
-            get { return _KMS_password; }
-            set { _KMS_password = value; }
+            get { return _printer_password; }
+            set { _printer_password = value; }
         }
     }
 }

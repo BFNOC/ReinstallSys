@@ -113,5 +113,11 @@ namespace ReinstallSys.Service.Data
             return list;
         }
 
+        public static FTPModel GetFTPModel()
+        {
+            FTPModel ftpModel = WebTools.GetFTPFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/ftp.json");
+            return ftpModel;
+        }
+
     }
 }

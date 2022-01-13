@@ -14,7 +14,6 @@ namespace ReinstallSys.Tools
 {
     internal class WebTools
     {
-        
         public static string GetJSONFromUrl(string url)
         {
             try
@@ -38,15 +37,12 @@ namespace ReinstallSys.Tools
             }
             return "访问失败";
         }
-        
-
         public static FTPModel GetFTPFromWeb(string url)
         {
             var data = GetJSONFromUrl(url);
             var output = JsonConvert.DeserializeObject<FTPModel>(data);
             return output;
         }
-
         public static List<OfficeInstallModel> GetOfficeInstallListFromWeb(string url)
         {
             var data = GetJSONFromUrl(url);
@@ -59,7 +55,6 @@ namespace ReinstallSys.Tools
             var output = JsonConvert.DeserializeObject<List<PrinterModel>>(data);
             return output;
         }
-
         public static List<SoftwareModel> GetSoftwareListFromWeb(string url)
         {
             var data = GetJSONFromUrl(url);

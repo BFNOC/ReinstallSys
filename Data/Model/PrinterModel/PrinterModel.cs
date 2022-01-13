@@ -17,5 +17,7 @@ namespace ReinstallSys.Data.Model.PrinterModel
         public string PrinterDriverName { get; set; }
         [JsonProperty("printer_ip")]
         public string PrinterIP { get; set; }
+        [JsonProperty("update_time")]
+        public string UpdateTime { get; set; }
     }
 }
