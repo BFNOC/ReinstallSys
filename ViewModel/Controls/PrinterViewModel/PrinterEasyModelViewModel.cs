@@ -1,19 +1,28 @@
 ﻿using FluentFTP;
 using HandyControl.Controls;
 using Microsoft.Toolkit.Mvvm.Input;
+using ReinstallSys.Data;
 using ReinstallSys.Data.Model.PrinterModel;
 using ReinstallSys.MyUserControl;
 using ReinstallSys.Service.Data;
+using ReinstallSys.Service.TaskQueue;
 using ReinstallSys.Tools;
 using SevenZip;
 using System;
+using System.Management;
+using System.Printing;
 
 namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
 {
     public class PrinterEasyModelViewModel : ViewModelBase<PrinterModel>
     {
         public PrinterEasyModelViewModel(DataService dataService) => DataList = dataService.GetPrinterList();
-        protected string DownloadFolder = AppDomain.CurrentDomain.BaseDirectory + "\\PrinterDownload";
+        private static string DriverInstallCommand { get; set; }
+        private static string DriverInstallCommandWorkDir { get; set; }
+        private static string DriverInstallSystem { get; set; }
+        private static string PrinterIP { get; set; }
+        private static string PrinterName { get; set; }
+
         private FtpStatus t;
         public FtpStatus T
         {
@@ -23,9 +32,10 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 t = value;
                 if (t == FtpStatus.Success)
                 {
-                    Console.WriteLine("解压啊你");
-                    SevenZipTools.UnZIPfile(DownloadFolder + "\\" + SelectedItem.PrinterDriverName,
-                    DownloadFolder + "\\printer_extr", EventHandler);
+                    Dialog.Show(new TextDialog("下载完成，请稍后等待解压安装"));
+                    SevenZipTools.UnZIPfile(GlobalVar.GlobalDownloadPrinterFolder + "\\" + SelectedItem.PrinterDriverName,
+                    DriverInstallCommandWorkDir, EventHandler);
+                    ButtonContent = "解压中，请勿操作";
                 }
             }
         }
@@ -62,6 +72,18 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                     + "打印机所用驱动安装包：" + _selectedItem.PrinterDriverName + "\r\n"
                     + "打印机IP地址：" + _selectedItem.PrinterIP + "\r\n"
                     + "更新时间：" + _selectedItem.UpdateTime;
+                DriverInstallCommand = _selectedItem.PrinterDriverInstallCMD;
+                DriverInstallCommandWorkDir = GlobalVar.GlobalDownloadPrinterExtrFolder(_selectedItem.PrinterDriverName);
+                PrinterIP = _selectedItem.PrinterIP;
+                PrinterName = _selectedItem.PrinterName;
+                if (OSTools.GetOperatingSystemVersion() == "Windows 10")
+                {
+                    DriverInstallSystem = _selectedItem.PrinterDriverWin10;
+                } 
+                else
+                {
+                    DriverInstallSystem = _selectedItem.PrinterDriverWin7;
+                }
             }
         }
         private bool _IsClick;
@@ -83,15 +105,13 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
             set => SetProperty(ref _buttonContent, value);
             
         }
-        
 
         public RelayCommand StartInstallPrinter => new(StartInstallPrinterCMD);
 
-
-
+        
         private async void StartInstallPrinterCMD()
         {
-            DirTools.CreateDir(DownloadFolder);
+            DirTools.CreateDir(GlobalVar.GlobalDownloadPrinterFolder);
             if (HasRemoveAllPrinter)
             {
                 PrinterTools.DeletePrinterFromList(PrinterTools.GetPrinterIntPtrList());
@@ -105,15 +125,47 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 ButtonContent = "下载中";
                 if (p.Progress >= 100)
                 {
-                    ButtonContent = "下载完成";
+                    ButtonContent = "下载完成，请稍后";
                 }
             });
-            T = await tool.DownFileAsync(DownloadFolder + "\\" + _selectedItem.PrinterDriverName, _selectedItem.PrinterDriverName, progress);
+            PrinterTools.AddMonitorPrinterPort(SelectedItem.PrinterIP, SelectedItem.PrinterIP, "Standard TCP/IP Port");
+            T = await tool.DownFileAsync(GlobalVar.GlobalDownloadPrinterFolder + "\\" + _selectedItem.PrinterDriverName, 
+                _selectedItem.PrinterDriverName, progress);
         }
 
-        private EventHandler<FileInfoEventArgs> EventHandler = (s, e) =>
+        private event EventHandler<EventArgs> EventHandler = async (s, e) =>
         {
-            Dialog.Show(new TextDialog("解压完成"));
+            Console.WriteLine("解压完成");
+            await CMDTools.SCAsyncInWorkDir(DriverInstallCommand, DriverInstallCommandWorkDir, ExitEvent);
+            App.Current.Dispatcher.Invoke((Action)(() =>
+            {
+                Dialog.Show(new TextDialog("解压完成，准备安装驱动\r\n请勿操作"));
+            }));
+        };
+
+        private static event EventHandler ExitEvent = (s, e) =>
+        {
+            PrinterTools.InstallPrinterDriverFromPackage(pszDriverName: DriverInstallSystem, dwFlags: 0);
+            PrintServer printServer = new(PrintSystemDesiredAccess.AdministrateServer);
+            string[] port = new string[] { PrinterIP };
+            try
+            {
+                var printQueue = printServer.InstallPrintQueue(PrinterName, DriverInstallSystem, port, "WinPrint", PrintQueueAttributes.Direct);
+                Console.WriteLine(printQueue.Name);
+                PrinterTools.SetDefaultPrinter(printQueue.Name);
+                //PrinterTools.PrintTestPage(null, null);
+                App.Current.Dispatcher.Invoke((Action)(() =>
+                {
+                    Dialog.Show(new TextDialog("安装完成，已打印测试页\r\n请进行下一步"));
+                }));
+            }
+            catch (Exception ex)
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    Dialog.Show(new TextDialog(ex.ToString()));
+                });
+            }
         };
         
     }

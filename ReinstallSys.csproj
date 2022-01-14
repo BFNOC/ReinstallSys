@@ -38,7 +38,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>\\172.28.56.96\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -125,6 +125,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\Int2BooleanConverter.cs" />
+    <Compile Include="Data\GlobalVar.cs" />
     <Compile Include="Data\Model\BeforDeploymentModel.cs" />
     <Compile Include="Data\Model\FTPModel.cs" />
     <Compile Include="Data\Model\MainWindowModel.cs" />
