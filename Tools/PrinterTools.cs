@@ -6,6 +6,7 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
+using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -278,6 +279,18 @@ namespace ReinstallSys.Tools
                 Impersonation = ImpersonationLevel.Impersonate
             };
             return connOptions;
+        }
+
+        public static void ClearSpoolPrinters()
+        {
+            ServiceController controller = new("Spooler");
+            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(Environment.SystemDirectory + @"\spool\PRINTERS");
+            var files = info.GetFiles();
+            foreach (var file in files)
+            {
+                file.Delete();
+            }
+            controller.Start();
         }
     }
 }
