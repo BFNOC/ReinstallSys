@@ -53,6 +53,11 @@ namespace ReinstallSys
                     {
                         mainContent.Children.Add(new OfficeInstall());
                     }
+                    else if (item.Description == "系统及Office激活")
+                    {
+                        mainContent.Children.Add(new Activator());
+                    }
+                    
                 }
             }
         }

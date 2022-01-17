@@ -59,7 +59,7 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 _oDLDriverFTPStatus = value;
                 if (_oDLDriverFTPStatus == FtpStatus.Success)
                 {
-                    Dialog.Show(new TextDialog("下载完成，请稍后等待解压"));
+                    Dialog.Show(new MyTextDialog("下载完成，请稍后等待解压"));
                     SevenZipTools.UnZIPfile(GlobalVar.GlobalDownloadPrinterFolder + "\\" + SelectedItem.PrinterDriverName,
                     DriverInstallCommandWorkDir, ODLEventHandler);
                     ODLDriverBtnConntent = "解压中，请勿操作";
@@ -75,7 +75,7 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 _startInstallFTPStatus = value;
                 if (_startInstallFTPStatus == FtpStatus.Success)
                 {
-                    Dialog.Show(new TextDialog("下载完成，请稍后等待解压"));
+                    Dialog.Show(new MyTextDialog("下载完成，请稍后等待解压"));
                     SevenZipTools.UnZIPfile(GlobalVar.GlobalDownloadPrinterFolder + "\\" + SelectedItem.PrinterDriverName,
                     DriverInstallCommandWorkDir, StartInstallEventHandler);
                     StartInstallBtnConntent = "解压中，请勿操作";
@@ -143,7 +143,7 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
 
         private void ShowText(FrameworkElement element)
         {
-            Dialog.Show(new TextDialog("Test..."));
+            Dialog.Show(new MyTextDialog("Test..."));
         }
 
 
@@ -206,7 +206,7 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
             await CMDTools.SCAsyncInWorkDir(DriverInstallCommand, DriverInstallCommandWorkDir, ODLExitEvent);
             await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
-                Dialog.Show(new TextDialog("解压完成，准备安装驱动\r\n请勿操作"));
+                Dialog.Show(new MyTextDialog("解压完成，准备安装驱动\r\n请勿操作"));
             }));
            
         };
@@ -217,14 +217,14 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 PrinterTools.InstallPrinterDriverFromPackage(pszDriverName: DriverInstallSystem, dwFlags: 0);
                 App.Current.Dispatcher.Invoke((Action)(() =>
                 {
-                    Dialog.Show(new TextDialog("安装完成\r\n请进行下一步"));
+                    Dialog.Show(new MyTextDialog("安装完成\r\n请进行下一步"));
                 }));
             }
             catch (Exception ex)
             {
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    Dialog.Show(new TextDialog(ex.ToString()));
+                    Dialog.Show(new MyTextDialog(ex.ToString()));
                 });
             }
         };
@@ -234,7 +234,7 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
             await CMDTools.SCAsyncInWorkDir(DriverInstallCommand, DriverInstallCommandWorkDir, StartInstallExitEvent);
             Application.Current.Dispatcher.Invoke((Action)(() =>
             {
-                Dialog.Show(new TextDialog("解压完成，准备安装驱动\r\n请勿操作"));
+                Dialog.Show(new MyTextDialog("解压完成，准备安装驱动\r\n请勿操作"));
             }));
 
         };
@@ -251,14 +251,14 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 PrinterTools.PrintTestPage(null, null);
                 Application.Current.Dispatcher.Invoke((Action)(() =>
                 {
-                    Dialog.Show(new TextDialog("安装完成，已打印测试页\r\n请进行下一步"));
+                    Dialog.Show(new MyTextDialog("安装完成，已打印测试页\r\n请进行下一步"));
                 }));
             }
             catch (Exception ex)
             {
                 Application.Current.Dispatcher.Invoke((Action)(() =>
                 {
-                    Dialog.Show(new TextDialog(ex.ToString()));
+                    Dialog.Show(new MyTextDialog(ex.ToString()));
                 }));
             }
         };

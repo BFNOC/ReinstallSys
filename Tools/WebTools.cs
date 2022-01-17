@@ -49,6 +49,18 @@ namespace ReinstallSys.Tools
             var output = JsonConvert.DeserializeObject<List<OfficeInstallModel>>(data);
             return output;
         }
+        public static List<OfficeUninstallModel> GetOfficeUninstallListFromWeb(string url)
+        {
+            var data = GetJSONFromUrl(url);
+            var output = JsonConvert.DeserializeObject<List<OfficeUninstallModel>>(data);
+            return output;
+        }
+        public static ActivatorModel GetActivatorFromWeb(string url)
+        {
+            var data = GetJSONFromUrl(url);
+            var output = JsonConvert.DeserializeObject<ActivatorModel>(data);
+            return output;
+        }
         public static List<PrinterModel> GetPrinterListFromWeb(string url)
         {
             var data = GetJSONFromUrl(url);

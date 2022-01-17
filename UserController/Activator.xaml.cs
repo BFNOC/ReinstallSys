@@ -1,5 +1,4 @@
-﻿using ReinstallSys.Tools;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,24 +16,13 @@ using System.Windows.Shapes;
 namespace ReinstallSys.UserController
 {
     /// <summary>
-    /// OfficeInstall.xaml 的交互逻辑
+    /// Activator.xaml 的交互逻辑
     /// </summary>
-    public partial class OfficeInstall : UserControl
+    public partial class Activator : UserControl
     {
-        
-        public OfficeInstall()
+        public Activator()
         {
             InitializeComponent();
-        }
-
-        private void OfficeUninstallCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            UninstallOfficeVersion.SelectedIndex = -1;
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            InstallOfficeVersion.SelectedIndex = -1;
         }
     }
 }

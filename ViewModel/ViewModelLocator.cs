@@ -21,8 +21,8 @@ namespace ReinstallSys.ViewModel
                 .AddTransient<PrinterAdvanceModelViewModel>()
                 .AddTransient<PrinterCustomModelViewModel>()
                 .AddTransient<OfficeInstallViewModel>()
-                .AddTransient<OfficeUninstallViewModel>()
                 .AddTransient<PrinterRootViewModel>()
+                .AddTransient<ActivatorViewModel>()
                 .BuildServiceProvider());
 
 
@@ -38,8 +38,7 @@ namespace ReinstallSys.ViewModel
         public static PrinterAdvanceModelViewModel PrinterAdvanceModel => Ioc.Default.GetRequiredService<PrinterAdvanceModelViewModel>();
         public static PrinterCustomModelViewModel PrinterCustomModel => Ioc.Default.GetRequiredService<PrinterCustomModelViewModel>();
         public static PrinterRootViewModel PrinterRoot => Ioc.Default.GetRequiredService<PrinterRootViewModel>();
-        public static OfficeInstallViewModel OfficeInstall => Ioc.Default.GetRequiredService<OfficeInstallViewModel>();
-        public static OfficeUninstallViewModel OfficeUninstall => Ioc.Default.GetRequiredService<OfficeUninstallViewModel>();
-        
+        public static OfficeInstallViewModel OfficeInstall => Ioc.Default.GetRequiredService<OfficeInstallViewModel>();        
+        public static ActivatorViewModel Activator => Ioc.Default.GetRequiredService<ActivatorViewModel>();
     }
 }

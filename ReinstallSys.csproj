@@ -127,6 +127,7 @@
     </ApplicationDefinition>
     <Compile Include="Converter\Int2BooleanConverter.cs" />
     <Compile Include="Data\GlobalVar.cs" />
+    <Compile Include="Data\Model\ActivatorModel.cs" />
     <Compile Include="Data\Model\BeforDeploymentModel.cs" />
     <Compile Include="Data\Model\FTPModel.cs" />
     <Compile Include="Data\Model\MainWindowModel.cs" />
@@ -136,12 +137,18 @@
     <Compile Include="Data\Model\PrinterModel\PrinterUserControlModel.cs" />
     <Compile Include="Data\Model\SoftwareModel.cs" />
     <Compile Include="Data\Model\StepBarModel.cs" />
+    <Compile Include="MyUserControl\MyTextDialog.xaml.cs">
+      <DependentUpon>MyTextDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service\MyEnum\EnumService.cs" />
     <Compile Include="Service\TaskQueue\TaskQueueService.cs" />
     <Compile Include="Tools\DirTools.cs" />
     <Compile Include="Tools\FTPTools.cs" />
     <Compile Include="Tools\ProcessTools.cs" />
     <Compile Include="Tools\SevenZipTools.cs" />
+    <Compile Include="UserController\Activator.xaml.cs">
+      <DependentUpon>Activator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserController\PrinterRootInstall.xaml.cs">
       <DependentUpon>PrinterRootInstall.xaml</DependentUpon>
     </Compile>
@@ -151,12 +158,10 @@
     <Compile Include="UserController\Printer\PrinterEasyModelUserControl.xaml.cs">
       <DependentUpon>PrinterEasyModelUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Controls\ActivatorViewModel.cs" />
     <Compile Include="ViewModel\Controls\PrinterRootViewModel.cs" />
     <Compile Include="UserController\Printer\PrinterAdvancedModeUserControl.xaml.cs">
       <DependentUpon>PrinterAdvancedModeUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MyUserControl\TextDialog.xaml.cs">
-      <DependentUpon>TextDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\Data\DataService.cs" />
     <Compile Include="Structures\DRIVER_INFO_1.cs" />
@@ -184,7 +189,6 @@
     </Compile>
     <Compile Include="ViewModel\Controls\BeforDeploymentViewModel.cs" />
     <Compile Include="ViewModel\Controls\OfficeInstallViewModel.cs" />
-    <Compile Include="ViewModel\Controls\OfficeUninstallViewModel.cs" />
     <Compile Include="ViewModel\Controls\PrinterViewModel\PrinterAdvanceModelViewModel.cs" />
     <Compile Include="ViewModel\Controls\PrinterViewModel\PrinterCustomModelViewModel.cs" />
     <Compile Include="ViewModel\Controls\PrinterViewModel\PrinterEasyModelViewModel.cs" />
@@ -205,15 +209,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MyUserControl\MyTextDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserController\Activator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserController\PrinterRootInstall.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserController\Printer\PrinterAdvancedModeUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MyUserControl\TextDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

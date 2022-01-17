@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:converter="clr-namespace:ReinstallSys.Converter"
              xmlns:local="clr-namespace:ReinstallSys.UserController"
              mc:Ignorable="d" 
+             DataContext="{Binding OfficeInstall, Source={StaticResource Locator}}" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:Int2BooleanConverter x:Key="inttobooleanConverter" />
+    </UserControl.Resources>
     <hc:TransitioningContentControl HorizontalAlignment="Center">
         <hc:SimpleStackPanel>
             <Grid Margin="12">
@@ -28,14 +33,15 @@
                         Content="使用WPS Office"
                         FontSize="20"
                         Checked="RadioButton_Checked"
+                        Name="UseWPS"
                         />
             </Grid>
             <hc:SimpleStackPanel
-                Visibility="{Binding ElementName=UseMSOffice, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}, FallbackValue=Hidden}"
+                
                 >
                 <ComboBox 
                     Name="InstallOfficeVersion"
-                    DataContext="{Binding OfficeInstall, Source={StaticResource Locator}}" 
+                    SelectedItem="{Binding SelectedOfficeInstall}"
                     FontSize="18"
                     Width="380" 
                     ItemsSource="{Binding DataList}"
@@ -54,26 +60,39 @@
                     IsChecked="False"/>
                 <ComboBox 
                     Name="UninstallOfficeVersion"
+                    SelectedItem="{Binding SelectedOfficeUninstall}"
                     IsEnabled="{Binding ElementName=OfficeUninstallCheckbox, Path=IsChecked}"
-                    DataContext="{Binding OfficeUninstall, Source={StaticResource Locator}}" 
                     FontSize="18"
                     Width="380" 
                     Margin="0,20,0,0"
-                    ItemsSource="{Binding DataList}"
+                    ItemsSource="{Binding OfficeUninstallList}"
                     DisplayMemberPath="Name"
                     hc:InfoElement.TitlePlacement="Top" 
                     hc:InfoElement.Title="卸载Office版本选择" 
                     hc:InfoElement.Necessary="True" 
                     hc:DropDownElement.ConsistentWidth="True"
                     Style="{StaticResource ComboBoxExtend}"/>
-                <Button 
+               
+                <hc:ProgressButton
                     Margin="20"
-                    Content="开始执行"
-                    Style="{StaticResource ButtonPrimary}"
-                    Click="Button_Click"
+                    IsEnabled="{Binding SelectedIndex, Converter={StaticResource inttobooleanConverter}, ElementName=InstallOfficeVersion}"
+                    Style="{StaticResource ProgressButtonSuccess}"
+                    Progress="{Binding DownloadProgress}"
+                    Content="{Binding StartProcessBtnContent}"
+                    Command="{Binding StartProcess}"
+                    Width="180"
+                />
+            </hc:SimpleStackPanel>
+            <hc:SimpleStackPanel
+                Visibility="{Binding ElementName=UseWPS, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}, FallbackValue=Hidden}"
+                >
+                <TextBlock 
+                    Margin="0,20,0,0"
+                    Text="如果使用WPS请点击下一步，WPS并不在这一步安装"
+                    FontSize="28" FontWeight="Bold"
+                    Style="{StaticResource TextBlockDefaultSuccess}"
                     />
             </hc:SimpleStackPanel>
-
         </hc:SimpleStackPanel>
     </hc:TransitioningContentControl>
 </UserControl>

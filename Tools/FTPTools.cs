@@ -11,6 +11,13 @@ namespace ReinstallSys.Tools
         {
             client = new FtpClient(FTPAddress, FTPUsername, FTPPassword);
         }
+        public async Task<FtpStatus> DownFileAsync(string FileSaveUri, string FileRemoveUri)
+        {
+            await client.ConnectAsync();
+            var t = await client.DownloadFileAsync(FileSaveUri, FileRemoveUri, FtpLocalExists.Overwrite, FtpVerify.Retry);
+            await client.DisconnectAsync();
+            return t;
+        }
         public async Task<FtpStatus> DownFileAsync(string FileSaveUri, string FileRemoveUri, Progress<FtpProgress> progress)
         {
             await client.ConnectAsync();

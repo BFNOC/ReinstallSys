@@ -22,7 +22,25 @@ namespace ReinstallSys.Tools
 			process.Close();
 			return text;
 		}
-		
+		public static string SC(string strCMD, string WorkDir)
+		{
+			Process process = new();
+			ProcessStartInfo startInfo = process.StartInfo;
+			startInfo.FileName = "cmd.exe";
+			startInfo.Arguments = "/c " + strCMD;
+			startInfo.Verb = "runas";
+			startInfo.WorkingDirectory = WorkDir;
+			startInfo.UseShellExecute = false;
+			startInfo.RedirectStandardInput = true;
+			startInfo.RedirectStandardOutput = true;
+			startInfo.RedirectStandardError = true;
+			startInfo.CreateNoWindow = true;
+			process.Start();
+			string text = process.StandardOutput.ReadToEnd();
+			process.Close();
+			return text;
+		}
+
 		public static Task<int> SCAsync(string strCMD)
 		{
 			var tcs = new TaskCompletionSource<int>();
@@ -58,7 +76,7 @@ namespace ReinstallSys.Tools
 			startInfo.RedirectStandardInput = true;
 			startInfo.RedirectStandardOutput = true;
 			startInfo.RedirectStandardError = true;
-			startInfo.CreateNoWindow = false;
+			startInfo.CreateNoWindow = true;
 			process.EnableRaisingEvents = true;
 			process.Exited += (sender, args) =>
 			{

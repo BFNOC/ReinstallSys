@@ -31,13 +31,18 @@ namespace ReinstallSys.Service.Data
                     Description = "Office安装"
                 },
                 new StepBarModel
-                { 
+                {
                     Header = "4",
+                    Description = "系统及Office激活"
+                },
+                new StepBarModel
+                { 
+                    Header = "5",
                     Description = "软件安装"
                 },
                 new StepBarModel
                 {
-                    Header = "5",
+                    Header = "6",
                     Description = "部署完成"
                 }
             };
@@ -91,16 +96,8 @@ namespace ReinstallSys.Service.Data
 
         public List<OfficeUninstallModel> GetOfficeUninstallList()
         {
-            return new()
-            {
-                new OfficeUninstallModel
-                {
-                    Name = "卸载Office 2010",
-                    FileURL = "xxx",
-                    Uninstall_command = "xxxx",
-                    Uninstall_arguments = "/xxx"
-                }
-            };
+            var list = WebTools.GetOfficeUninstallListFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/OfficeUninstall.json");
+            return list;
         }
 
         public List<PrinterUserControlModel> GetPrinterUserControlList()
@@ -113,6 +110,11 @@ namespace ReinstallSys.Service.Data
             return list;
         }
 
+        public ActivatorModel GetActivator()
+        {
+            ActivatorModel activator = WebTools.GetActivatorFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/Activator.json");
+            return activator;
+        }
         public static FTPModel GetFTPModel()
         {
             FTPModel ftpModel = WebTools.GetFTPFromWeb("http://bazx.mymiku.net/DontNet/ReinstallSys/ftp.json");

@@ -23,11 +23,11 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 ProcessTools.Taskkill("spoolsv.exe");
                 ProcessTools.Taskkill("printfilterpipelinesvc.exe");
                 PrinterTools.ClearSpoolPrinters();
-                Dialog.Show(new TextDialog("清除完成！"));
+                Dialog.Show(new MyTextDialog("清除完成！"));
             }
             catch (Exception ex)
             {
-                Dialog.Show(new TextDialog(ex.ToString()));
+                Dialog.Show(new MyTextDialog(ex.ToString()));
             }
             
         }

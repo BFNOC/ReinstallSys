@@ -32,7 +32,7 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 t = value;
                 if (t == FtpStatus.Success)
                 {
-                    Dialog.Show(new TextDialog("下载完成，请稍后等待解压安装"));
+                    Dialog.Show(new MyTextDialog("下载完成，请稍后等待解压安装"));
                     SevenZipTools.UnZIPfile(GlobalVar.GlobalDownloadPrinterFolder + "\\" + SelectedItem.PrinterDriverName,
                     DriverInstallCommandWorkDir, EventHandler);
                     ButtonContent = "解压中，请勿操作";
@@ -139,7 +139,7 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
             await CMDTools.SCAsyncInWorkDir(DriverInstallCommand, DriverInstallCommandWorkDir, ExitEvent);
             App.Current.Dispatcher.Invoke((Action)(() =>
             {
-                Dialog.Show(new TextDialog("解压完成，准备安装驱动\r\n请勿操作"));
+                Dialog.Show(new MyTextDialog("解压完成，准备安装驱动\r\n请勿操作"));
             }));
         };
 
@@ -156,14 +156,14 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 PrinterTools.PrintTestPage(null, null);
                 App.Current.Dispatcher.Invoke((Action)(() =>
                 {
-                    Dialog.Show(new TextDialog("安装完成，已打印测试页\r\n请进行下一步"));
+                    Dialog.Show(new MyTextDialog("安装完成，已打印测试页\r\n请进行下一步"));
                 }));
             }
             catch (Exception ex)
             {
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    Dialog.Show(new TextDialog(ex.ToString()));
+                    Dialog.Show(new MyTextDialog(ex.ToString()));
                 });
             }
         };
