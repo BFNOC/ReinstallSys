@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:converter="clr-namespace:ReinstallSys.Converter"
              mc:Ignorable="d" 
              DataContext="{Binding PrinterAdvanceModel,Source={StaticResource Locator}}"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:Int2BooleanConverter x:Key="inttobooleanConverter" />
+    </UserControl.Resources>
     <hc:TransitioningContentControl>
         <hc:SimpleStackPanel>
             <CheckBox 
@@ -14,7 +18,7 @@
                 FontSize="20"
                 IsChecked="{Binding HasRemoveAllPrinter}" 
                 HorizontalAlignment="Center"/>
-            <ComboBox 
+            <ComboBox x:Name="comboBox"
                 SelectedItem="{Binding SelectedItem}"
                 FontSize="18"
                 Width="380" 
@@ -36,13 +40,23 @@
                 hc:InfoElement.Necessary="True" 
                 hc:DropDownElement.ConsistentWidth="True"
                 Style="{StaticResource ComboBoxExtend}"/>
-            <TextBlock x:Name="ls" />
-            <Button 
-                Margin="20"
-                Content="开始安装打印机"
-                Style="{StaticResource ButtonPrimary}"
-                Command="{Binding StartInstallPrinter}"
-              />
+            <hc:ProgressButton
+                    IsEnabled="{Binding SelectedIndex, Converter={StaticResource inttobooleanConverter}, ElementName=comboBox}"
+                    Margin="20"
+                    Style="{StaticResource ProgressButtonPrimary}"
+                    Progress="{Binding StartInstallProgress}"
+                    Content="{Binding StartInstallBtnConntent}"
+                    Command="{Binding StartInstallPrinter}"
+                    Width="180"
+                />
+            <hc:ProgressButton
+                    IsEnabled="{Binding SelectedIndex, Converter={StaticResource inttobooleanConverter}, ElementName=comboBox}"
+                    Style="{StaticResource ProgressButtonSuccess}"
+                    Progress="{Binding DriverDownloadProgress}"
+                    Content="{Binding ODLDriverBtnConntent}"
+                    Command="{Binding OnlyDownloadDriver}"
+                    Width="180"
+                />
         </hc:SimpleStackPanel>
     </hc:TransitioningContentControl>
 </UserControl>

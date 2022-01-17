@@ -35,10 +35,6 @@
                 Margin="8"
                 FontSize="18"
                 Text="{Binding PrinterDetails}" />
-                <Button 
-                Margin="8"
-                Content="开始安装打印机"
-                Style="{StaticResource ButtonPrimary}" />
                 <hc:ProgressButton
                     IsEnabled="{Binding SelectedIndex, Converter={StaticResource inttobooleanConverter}, ElementName=comboBox}"
                     Style="{StaticResource ProgressButtonSuccess}"

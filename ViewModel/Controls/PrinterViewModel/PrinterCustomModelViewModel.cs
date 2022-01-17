@@ -1,5 +1,7 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using HandyControl.Controls;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using ReinstallSys.MyUserControl;
 using ReinstallSys.Tools;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,18 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
 
         private void ClearPrinterSpoolCMD()
         {
-            ProcessTools.Taskkill("spoolsv.exe");
-            ProcessTools.Taskkill("printfilterpipelinesvc.exe");
-            PrinterTools.ClearSpoolPrinters();
+            try
+            {
+                ProcessTools.Taskkill("spoolsv.exe");
+                ProcessTools.Taskkill("printfilterpipelinesvc.exe");
+                PrinterTools.ClearSpoolPrinters();
+                Dialog.Show(new TextDialog("清除完成！"));
+            }
+            catch (Exception ex)
+            {
+                Dialog.Show(new TextDialog(ex.ToString()));
+            }
+            
         }
     }
 }

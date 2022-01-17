@@ -1,21 +1,15 @@
-﻿using HandyControl.Controls;
+﻿using FluentFTP;
+using HandyControl.Controls;
 using Microsoft.Toolkit.Mvvm.Input;
-using ReinstallSys.Data.Model;
+using ReinstallSys.Data;
 using ReinstallSys.Data.Model.PrinterModel;
 using ReinstallSys.MyUserControl;
 using ReinstallSys.Service.Data;
 using ReinstallSys.Tools;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Management;
 using System.Printing;
-using System.Printing.IndexedProperties;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
 {
@@ -26,33 +20,121 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
             DataList = dataService.GetPrinterList();
             PrinterIP = dataService.GetPrinterIPList();
         }
-        public List<IntPtr> PrinterList = new();
+        private static string DriverInstallCommand { get; set; }
+        private static string DriverInstallCommandWorkDir { get; set; }
+        private static string DriverInstallSystem { get; set; }
+        private static string EventUsePrinterIP { get; set; }
+        private static string EventUsePrinterName { get; set; }
 
+        private string _oDLDriverBtnConntent = "仅下载驱动包";
+        public string ODLDriverBtnConntent
+        {
+            get => _oDLDriverBtnConntent;
+            set => SetProperty(ref _oDLDriverBtnConntent, value);
+        }
+        private string _startInstallBtnConntent = "开始安装打印机";
+        public string StartInstallBtnConntent
+        {
+            get => _startInstallBtnConntent;
+            set => SetProperty(ref _startInstallBtnConntent, value);
+        }
+        private int _driverDownloadProgress;
+        public int DriverDownloadProgress
+        {
+            get => _driverDownloadProgress;
+            set => SetProperty(ref _driverDownloadProgress, value);
+        }
+        private int _startInstallProgress;
+        public int StartInstallProgress
+        {
+            get => _startInstallProgress;
+            set => SetProperty(ref _startInstallProgress, value);
+        }
+        private FtpStatus _oDLDriverFTPStatus;
+        public FtpStatus ODLDriverFTPStatus
+        {
+            get => _oDLDriverFTPStatus;
+            set
+            {
+                _oDLDriverFTPStatus = value;
+                if (_oDLDriverFTPStatus == FtpStatus.Success)
+                {
+                    Dialog.Show(new TextDialog("下载完成，请稍后等待解压"));
+                    SevenZipTools.UnZIPfile(GlobalVar.GlobalDownloadPrinterFolder + "\\" + SelectedItem.PrinterDriverName,
+                    DriverInstallCommandWorkDir, ODLEventHandler);
+                    ODLDriverBtnConntent = "解压中，请勿操作";
+                }
+            }
+        }
+        private FtpStatus _startInstallFTPStatus;
+        public FtpStatus StartInstallFTPStatus
+        {
+            get => _startInstallFTPStatus;
+            set
+            {
+                _startInstallFTPStatus = value;
+                if (_startInstallFTPStatus == FtpStatus.Success)
+                {
+                    Dialog.Show(new TextDialog("下载完成，请稍后等待解压"));
+                    SevenZipTools.UnZIPfile(GlobalVar.GlobalDownloadPrinterFolder + "\\" + SelectedItem.PrinterDriverName,
+                    DriverInstallCommandWorkDir, StartInstallEventHandler);
+                    StartInstallBtnConntent = "解压中，请勿操作";
+                }
+            }
+        }
+        /// <summary>
+        /// IP列表
+        /// </summary>
         private List<string> _printerIP;
         public List<string> PrinterIP
         {
             get => _printerIP;
             set => SetProperty(ref _printerIP, value);
         }
-
+        /// <summary>
+        /// 选择的IP地址
+        /// </summary>
         private string _printerIPselectedItem;
         public string PrinterIPselectedItem
         {
             get => _printerIPselectedItem;
-            set => SetProperty(ref _printerIPselectedItem, value);
+            set 
+            { 
+                SetProperty(ref _printerIPselectedItem, value);
+                EventUsePrinterIP = _printerIPselectedItem;
+            }
         }
-        private bool _hasRemoveAllPrinter = false;
+        /// <summary>
+        /// 是否移除所有打印机
+        /// </summary>
+        private bool _hasRemoveAllPrinter = true;
         public bool HasRemoveAllPrinter
         { 
             get => _hasRemoveAllPrinter;
             set => SetProperty(ref _hasRemoveAllPrinter, value);
         }
-
+        /// <summary>
+        /// 选择的打印机Model
+        /// </summary>
         private PrinterModel _selectedItem;
         public PrinterModel SelectedItem
         {
             get => _selectedItem;
-            set => SetProperty(ref _selectedItem, value);
+            set
+            {
+                SetProperty(ref _selectedItem, value);
+                DriverInstallCommand = _selectedItem.PrinterDriverInstallCMD;
+                DriverInstallCommandWorkDir = GlobalVar.GlobalDownloadPrinterExtrFolder(_selectedItem.PrinterDriverName);
+                EventUsePrinterName = _selectedItem.PrinterName;
+                if (OSTools.GetOperatingSystemVersion() == "Windows 10")
+                {
+                    DriverInstallSystem = _selectedItem.PrinterDriverWin10;
+                }
+                else
+                {
+                    DriverInstallSystem = _selectedItem.PrinterDriverWin7;
+                }
+            }
         }
 
       
@@ -67,42 +149,118 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
 
 
         public RelayCommand StartInstallPrinter => new(StartInstallPrinterCMD);
-
-       
-
         private async void StartInstallPrinterCMD()
         {
-            //LocalPrintServer myLocalPrintServer = new(PrintSystemDesiredAccess.AdministrateServer);
-            PrintServer printServer = new(PrintSystemDesiredAccess.AdministrateServer);
-            
+            if (PrinterIPselectedItem != null)
+                PrinterTools.AddMonitorPrinterPort(PrinterIPselectedItem, PrinterIPselectedItem, "Standard TCP/IP Port");
+            DirTools.CreateDir(GlobalVar.GlobalDownloadPrinterFolder);
+            if (HasRemoveAllPrinter)
+            {
+                PrinterTools.DeletePrinterFromList(PrinterTools.GetPrinterIntPtrList());
+            }
+            var ftp = DataService.GetFTPModel();
+            FTPTools tool = new(ftp.FTPAddress, ftp.PrinterUsername, ftp.PrinterPassword);
+            Progress<FtpProgress> progress = new(p =>
+            {
+                Console.WriteLine(p.Progress);
+                DriverDownloadProgress = Convert.ToInt32(p.Progress);
+                StartInstallBtnConntent = "下载中";
+                if (p.Progress >= 100)
+                {
+                    StartInstallBtnConntent = "下载完成，请稍后";
+                }
+            });
+            StartInstallFTPStatus = await tool.DownFileAsync(GlobalVar.GlobalDownloadPrinterFolder + "\\" + _selectedItem.PrinterDriverName,
+                _selectedItem.PrinterDriverName, progress);
+        }
 
-            string[] port = new string[] { "172.28.56.240" };
+        public RelayCommand OnlyDownloadDriver => new(OnlyDownloadDriverCMD);
+        private async void OnlyDownloadDriverCMD()
+        {
+            if (PrinterIPselectedItem != null)
+                PrinterTools.AddMonitorPrinterPort(PrinterIPselectedItem, PrinterIPselectedItem, "Standard TCP/IP Port");
+            DirTools.CreateDir(GlobalVar.GlobalDownloadPrinterFolder);
+            if (HasRemoveAllPrinter)
+            {
+                PrinterTools.DeletePrinterFromList(PrinterTools.GetPrinterIntPtrList());
+            }
+            var ftp = DataService.GetFTPModel();
+            FTPTools tool = new(ftp.FTPAddress, ftp.PrinterUsername, ftp.PrinterPassword);
+            Progress<FtpProgress> progress = new(p =>
+            {
+                Console.WriteLine(p.Progress);
+                DriverDownloadProgress = Convert.ToInt32(p.Progress);
+                ODLDriverBtnConntent = "下载中";
+                if (p.Progress >= 100)
+                {
+                    ODLDriverBtnConntent = "下载完成，请稍后";
+                }
+            });
+            ODLDriverFTPStatus = await tool.DownFileAsync(GlobalVar.GlobalDownloadPrinterFolder + "\\" + _selectedItem.PrinterDriverName,
+                _selectedItem.PrinterDriverName, progress);
+        }
 
+        private event EventHandler<EventArgs> ODLEventHandler = async (s, e) =>
+        {
+            Console.WriteLine("解压完成");
+            await CMDTools.SCAsyncInWorkDir(DriverInstallCommand, DriverInstallCommandWorkDir, ODLExitEvent);
+            await Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                Dialog.Show(new TextDialog("解压完成，准备安装驱动\r\n请勿操作"));
+            }));
+           
+        };
+        private static event EventHandler ODLExitEvent = (s, e) =>
+        {
             try
             {
-                printServer.InstallPrintQueue("HP LaserJet MFP M227-M231", "HP LaserJet MFP M227-M231 PCL-6 (V4)", port, "WinPrint", PrintQueueAttributes.Direct);
-                //myLocalPrintServer.InstallPrintQueue("test", "Microsoft Print To PDF", port, "WinPrint", PrintQueueAttributes.Direct);
-                //myLocalPrintServer.Commit();
+                PrinterTools.InstallPrinterDriverFromPackage(pszDriverName: DriverInstallSystem, dwFlags: 0);
+                App.Current.Dispatcher.Invoke((Action)(() =>
+                {
+                    Dialog.Show(new TextDialog("安装完成\r\n请进行下一步"));
+                }));
             }
             catch (Exception ex)
             {
-                Dialog.Show(new TextDialog(ex.ToString()));
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    Dialog.Show(new TextDialog(ex.ToString()));
+                });
             }
-            //Console.WriteLine(PrinterIPselectedItem.PrinterIP);
-            //await CMDTools.SCAsync(@"msiexec /i C:\Users\User\Desktop\LJM227-M231_UWWL_4-1_UWWL_4_1_Full_WebPack_44.5.2693\LM227x64.msi /q");
+        };
+        private event EventHandler<EventArgs> StartInstallEventHandler = async (s, e) =>
+        {
+            Console.WriteLine("解压完成");
+            await CMDTools.SCAsyncInWorkDir(DriverInstallCommand, DriverInstallCommandWorkDir, StartInstallExitEvent);
+            Application.Current.Dispatcher.Invoke((Action)(() =>
+            {
+                Dialog.Show(new TextDialog("解压完成，准备安装驱动\r\n请勿操作"));
+            }));
 
-            //if(SelectedItem != null)
-            //{
-            //    if (HasRemoveAllPrinter)
-            //        if (!PrinterTools.DeletePrinterFromList(PrinterTools.GetPrinterIntPtrList()))
-            //            Dialog.Show(new TextDialog("出现未能删除旧打印机的错误"));
-            //} 
-            //else
-            //{
-            //    Dialog.Show(new TextDialog("未选择打印机型号"));
-            //}
-        }
-
-
+        };
+        private static event EventHandler StartInstallExitEvent = (s, e) =>
+        {
+            PrinterTools.InstallPrinterDriverFromPackage(pszDriverName: DriverInstallSystem, dwFlags: 0);
+            PrintServer printServer = new(PrintSystemDesiredAccess.AdministrateServer);
+            string[] port = new string[] { EventUsePrinterIP };
+            try
+            {
+                var printQueue = printServer.InstallPrintQueue(EventUsePrinterName, DriverInstallSystem, port, "WinPrint", PrintQueueAttributes.Direct);
+                Console.WriteLine(printQueue.Name);
+                PrinterTools.SetDefaultPrinter(printQueue.Name);
+                PrinterTools.PrintTestPage(null, null);
+                Application.Current.Dispatcher.Invoke((Action)(() =>
+                {
+                    Dialog.Show(new TextDialog("安装完成，已打印测试页\r\n请进行下一步"));
+                }));
+            }
+            catch (Exception ex)
+            {
+                Application.Current.Dispatcher.Invoke((Action)(() =>
+                {
+                    Dialog.Show(new TextDialog(ex.ToString()));
+                }));
+            }
+        };
     }
 }

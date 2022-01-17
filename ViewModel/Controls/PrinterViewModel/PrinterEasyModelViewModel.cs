@@ -153,7 +153,7 @@ namespace ReinstallSys.ViewModel.Controls.PrinterViewModel
                 var printQueue = printServer.InstallPrintQueue(PrinterName, DriverInstallSystem, port, "WinPrint", PrintQueueAttributes.Direct);
                 Console.WriteLine(printQueue.Name);
                 PrinterTools.SetDefaultPrinter(printQueue.Name);
-                //PrinterTools.PrintTestPage(null, null);
+                PrinterTools.PrintTestPage(null, null);
                 App.Current.Dispatcher.Invoke((Action)(() =>
                 {
                     Dialog.Show(new TextDialog("安装完成，已打印测试页\r\n请进行下一步"));
