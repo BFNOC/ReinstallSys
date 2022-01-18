@@ -126,6 +126,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\Int2BooleanConverter.cs" />
+    <Compile Include="Converter\Software2ObjectConverter.cs" />
     <Compile Include="Data\GlobalVar.cs" />
     <Compile Include="Data\Model\ActivatorModel.cs" />
     <Compile Include="Data\Model\BeforDeploymentModel.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="ViewModel\Controls\SoftwareViewModel.cs" />
     <Compile Include="ViewModel\Controls\StepBarViewModel.cs" />
     <Compile Include="ViewModel\Main\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\ObservableDictionary.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">

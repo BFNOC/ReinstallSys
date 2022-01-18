@@ -5,36 +5,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muc="clr-namespace:ReinstallSys.MyUserControl"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:converter="clr-namespace:ReinstallSys.Converter"
              DataContext="{Binding Software, Source={StaticResource Locator}}"
              mc:Ignorable="d" 
             >
+    <UserControl.Resources>
+        <converter:Software2ObjectConverter x:Key="SoftwareConverter" />
+    </UserControl.Resources>
     <hc:TransitioningContentControl>
         <hc:ScrollViewer>
-            <hc:SimpleStackPanel>
-                
-                    <TextBlock FontSize="18" Text="test:" />
-                    
-                    
-                    <ItemsControl ItemsSource="{Binding DataList}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                            <hc:WaterfallPanel Groups="8" />
-                        </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <muc:SoftwareControl SoftwareName="{Binding Path=Name}" SoftwareDescription="{Binding Path=Description}" SoftwareProgressBar="{Binding Path=SoftwareProgressBar}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    
-
-
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding SoftwareDic}" Grid.Column="0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                                <TextBlock FontSize="18" Text="{Binding Key}" />
+                                <ItemsControl ItemsSource="{Binding Value}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <hc:SimpleStackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <hc:TransitioningContentControl>
+                                                <UniformGrid Margin="3" Rows="3">
+                                                    <CheckBox 
+                                                        Content="{Binding Name}" 
+                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.SoftwareCheckCommand}"
+                                                        >
+                                                        <CheckBox.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource SoftwareConverter}">
+                                                                <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}" Mode="OneWay" />
+                                                                <Binding Path="DataContext" RelativeSource="{RelativeSource Self}" Mode="OneWay" />
+                                                            </MultiBinding>
+                                                        </CheckBox.CommandParameter>
+                                                    </CheckBox>
+                                                    <TextBlock 
+                                                        HorizontalAlignment="Left" 
+                                                        Text="{Binding Description}" 
+                                                        Style="{StaticResource TextBlockDefaultSecLight}" />
+                                                    <ProgressBar 
+                                                        Style="{StaticResource ProgressBarBaseStyle}"
+                                                        Value="{Binding SoftwareProgressBar}"
+                                                        />
+                                                </UniformGrid>
+                                            </hc:TransitioningContentControl>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                
-
-                
-                <Button Margin="0,10,0,10" Content="安装开始" Style="{StaticResource ButtonPrimary}" />
-            </hc:SimpleStackPanel>
+                <Button Grid.Row="1" Margin="0,10,0,10" Content="安装开始" Style="{StaticResource ButtonPrimary}" Command="{Binding StartProcess}"/>
+            </StackPanel>
         </hc:ScrollViewer>
     </hc:TransitioningContentControl>
 

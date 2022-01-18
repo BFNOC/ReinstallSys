@@ -13,8 +13,6 @@ namespace ReinstallSys.ViewModel.Controls
 {
     public class ActivatorViewModel : ViewModelBase<ActivatorModel>
     {
-
-
         public static ActivatorModel activator;
         public ActivatorViewModel(DataService dataService)
         {

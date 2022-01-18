@@ -37,7 +37,7 @@
                         />
             </Grid>
             <hc:SimpleStackPanel
-                
+                Visibility="{Binding ElementName=UseMSOffice, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}, FallbackValue=Hidden}"
                 >
                 <ComboBox 
                     Name="InstallOfficeVersion"
@@ -88,7 +88,7 @@
                 >
                 <TextBlock 
                     Margin="0,20,0,0"
-                    Text="如果使用WPS请点击下一步，WPS并不在这一步安装"
+                    Text="如果使用WPS请先在下一步激活系统后，再进入“软件安装”步骤安装"
                     FontSize="28" FontWeight="Bold"
                     Style="{StaticResource TextBlockDefaultSuccess}"
                     />
