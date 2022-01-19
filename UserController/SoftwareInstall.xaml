@@ -6,7 +6,6 @@
              xmlns:muc="clr-namespace:ReinstallSys.MyUserControl"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:converter="clr-namespace:ReinstallSys.Converter"
-             DataContext="{Binding Software, Source={StaticResource Locator}}"
              mc:Ignorable="d" 
             >
     <UserControl.Resources>
@@ -15,51 +14,219 @@
     <hc:TransitioningContentControl>
         <hc:ScrollViewer>
             <StackPanel>
-                <ItemsControl ItemsSource="{Binding SoftwareDic}" Grid.Column="0">
+                <ComboBox 
+                    x:Name="PackageCombox"
+                    DisplayMemberPath="PackageName"
+                    IsEditable="False" 
+                    SelectedIndex="-1" 
+                    hc:InfoElement.Title="快捷选择所需的软件：" 
+                    Width="320"
+                    Style="{StaticResource ComboBoxExtend}" 
+                    Margin="0,16,0,0" 
+                    SelectionChanged="PackageCombox_SelectionChanged"
+                    hc:InfoElement.Placeholder="请选择"/>
+                <TextBlock Text="常用软件：" />
+                <ItemsControl x:Name="ChangyongItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
-                                <TextBlock FontSize="18" Text="{Binding Key}" />
-                                <ItemsControl ItemsSource="{Binding Value}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <hc:SimpleStackPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <hc:TransitioningContentControl>
-                                                <UniformGrid Margin="3" Rows="3">
-                                                    <CheckBox 
-                                                        Content="{Binding Name}" 
-                                                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.SoftwareCheckCommand}"
-                                                        >
-                                                        <CheckBox.CommandParameter>
-                                                            <MultiBinding Converter="{StaticResource SoftwareConverter}">
-                                                                <Binding Path="IsChecked" RelativeSource="{RelativeSource Self}" Mode="OneWay" />
-                                                                <Binding Path="DataContext" RelativeSource="{RelativeSource Self}" Mode="OneWay" />
-                                                            </MultiBinding>
-                                                        </CheckBox.CommandParameter>
-                                                    </CheckBox>
-                                                    <TextBlock 
-                                                        HorizontalAlignment="Left" 
-                                                        Text="{Binding Description}" 
-                                                        Style="{StaticResource TextBlockDefaultSecLight}" />
-                                                    <ProgressBar 
-                                                        Style="{StaticResource ProgressBarBaseStyle}"
-                                                        Value="{Binding SoftwareProgressBar}"
-                                                        />
-                                                </UniformGrid>
-                                            </hc:TransitioningContentControl>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
+                            <hc:TransitioningContentControl>
+                                <UniformGrid Margin="3" Rows="3">
+                                    <CheckBox 
+                                        IsChecked="{Binding HasSelected}"
+                                        Checked="CheckBox_Checked"
+                                        Unchecked="CheckBox_Unchecked"
+                                        hc:Poptip.Content="{Binding Description}"
+                                        Content="{Binding Name}">
+                                    </CheckBox>
+                                    <ProgressBar 
+                                    Style="{StaticResource ProgressBarBaseStyle}"
+                                    Value="{Binding SoftwareProgressBar}"
+                                    />
+                                </UniformGrid>
+                            </hc:TransitioningContentControl>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-               
-                <Button Grid.Row="1" Margin="0,10,0,10" Content="安装开始" Style="{StaticResource ButtonPrimary}" Command="{Binding StartProcess}"/>
+                <TextBlock Text="教师办公：" />
+                <ItemsControl x:Name="OfficeItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <hc:TransitioningContentControl>
+                                <UniformGrid Margin="3" Rows="3">
+                                    <CheckBox 
+                                        IsChecked="{Binding HasSelected}"
+                                        hc:Poptip.Content="{Binding Description}"
+                                        Content="{Binding Name}">
+                                    </CheckBox>
+                                    <ProgressBar 
+                                    Style="{StaticResource ProgressBarBaseStyle}"
+                                    Value="{Binding SoftwareProgressBar}"
+                                    />
+                                </UniformGrid>
+                            </hc:TransitioningContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Text="影音：" />
+                <ItemsControl x:Name="PlayerItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <hc:TransitioningContentControl>
+                                <UniformGrid Margin="3" Rows="3">
+                                    <CheckBox 
+                                        IsChecked="{Binding HasSelected}"
+                                        hc:Poptip.Content="{Binding Description}"
+                                        Content="{Binding Name}">
+                                    </CheckBox>
+                                    <ProgressBar 
+                                    Style="{StaticResource ProgressBarBaseStyle}"
+                                    Value="{Binding SoftwareProgressBar}"
+                                    />
+                                </UniformGrid>
+                            </hc:TransitioningContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Text="安全：" />
+                <ItemsControl x:Name="SafeItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <hc:TransitioningContentControl>
+                                <UniformGrid Margin="3" Rows="3">
+                                    <CheckBox 
+                                        IsChecked="{Binding HasSelected}"
+                                        hc:Poptip.Content="{Binding Description}"
+                                        Content="{Binding Name}">
+                                    </CheckBox>
+                                    <ProgressBar 
+                                    Style="{StaticResource ProgressBarBaseStyle}"
+                                    Value="{Binding SoftwareProgressBar}"
+                                    />
+                                </UniformGrid>
+                            </hc:TransitioningContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Text="输入法：" />
+                <ItemsControl x:Name="InputItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <hc:TransitioningContentControl>
+                                <UniformGrid Margin="3" Rows="3">
+                                    <CheckBox 
+                                        IsChecked="{Binding HasSelected}"
+                                        hc:Poptip.Content="{Binding Description}"
+                                        Content="{Binding Name}">
+                                    </CheckBox>
+                                    <ProgressBar 
+                                    Style="{StaticResource ProgressBarBaseStyle}"
+                                    Value="{Binding SoftwareProgressBar}"
+                                    />
+                                </UniformGrid>
+                            </hc:TransitioningContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Text="解压缩：" />
+                <ItemsControl x:Name="ZIPItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <hc:TransitioningContentControl>
+                                <UniformGrid Margin="3" Rows="3">
+                                    <CheckBox 
+                                        IsChecked="{Binding HasSelected}"
+                                        hc:Poptip.Content="{Binding Description}"
+                                        Content="{Binding Name}">
+                                    </CheckBox>
+                                    <ProgressBar 
+                                    Style="{StaticResource ProgressBarBaseStyle}"
+                                    Value="{Binding SoftwareProgressBar}"
+                                    />
+                                </UniformGrid>
+                            </hc:TransitioningContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Text="浏览器：" />
+                <ItemsControl x:Name="BroswerItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <hc:TransitioningContentControl>
+                                <UniformGrid Margin="3" Rows="3">
+                                    <CheckBox 
+                                        IsChecked="{Binding HasSelected}"
+                                        hc:Poptip.Content="{Binding Description}"
+                                        Content="{Binding Name}">
+                                    </CheckBox>
+                                    <ProgressBar 
+                                    Style="{StaticResource ProgressBarBaseStyle}"
+                                    Value="{Binding SoftwareProgressBar}"
+                                    />
+                                </UniformGrid>
+                            </hc:TransitioningContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock Text="其他：" />
+                <ItemsControl x:Name="OtherItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <hc:WaterfallPanel Groups="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <hc:TransitioningContentControl>
+                                <UniformGrid Margin="3" Rows="3">
+                                    <CheckBox 
+                                        hc:Poptip.Content="{Binding Description}"
+                                        Content="{Binding Name}">
+                                    </CheckBox>
+                                    <ProgressBar 
+                                    Style="{StaticResource ProgressBarBaseStyle}"
+                                    Value="{Binding SoftwareProgressBar}"
+                                    />
+                                </UniformGrid>
+                            </hc:TransitioningContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Grid.Row="1" Margin="0,10,0,10" Content="安装开始" Style="{StaticResource ButtonPrimary}" Click="Button_Click"/>
             </StackPanel>
         </hc:ScrollViewer>
     </hc:TransitioningContentControl>

@@ -73,5 +73,11 @@ namespace ReinstallSys.Tools
             var output = JsonConvert.DeserializeObject<List<SoftwareModel>>(data);
             return output;
         }
+        public static List<SoftwarePackageModel> GetSoftwarePackageFromWeb(string url)
+        {
+            var data = GetJSONFromUrl(url);
+            var output = JsonConvert.DeserializeObject<List<SoftwarePackageModel>>(data);
+            return output;
+        }
     }
 }

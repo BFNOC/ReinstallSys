@@ -44,5 +44,10 @@ namespace ReinstallSys.Data
         {
             return GlobalDownloadOfficeFolder + "\\" + Path.GetFileNameWithoutExtension(OfficeName);
         }
+        /// <summary>
+        /// 程序使用的下载Software文件夹
+        /// 示例：E:\soft\[yoursoft]\SoftwareDownload
+        /// </summary>
+        public static string GlobalDownloadSoftwareFolder = RunFolder + "\\SoftwareDownload";
     }
 }

@@ -137,6 +137,7 @@
     <Compile Include="Data\Model\PrinterModel\PrinterModel.cs" />
     <Compile Include="Data\Model\PrinterModel\PrinterUserControlModel.cs" />
     <Compile Include="Data\Model\SoftwareModel.cs" />
+    <Compile Include="Data\Model\SoftwarePackageModel.cs" />
     <Compile Include="Data\Model\StepBarModel.cs" />
     <Compile Include="MyUserControl\MyTextDialog.xaml.cs">
       <DependentUpon>MyTextDialog.xaml</DependentUpon>

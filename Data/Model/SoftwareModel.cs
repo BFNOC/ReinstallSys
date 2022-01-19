@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace ReinstallSys.Data.Model
 {
-    public class SoftwareModel
+    public class SoftwareModel: INotifyPropertyChanged
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -15,7 +16,23 @@ namespace ReinstallSys.Data.Model
         public string AutoInstall { get; set; }
         public string ManualInstall { get; set; }
 
-        public int SoftwareProgressBar { get; set; }
+        private int _softwareProgressBar;
+        public int SoftwareProgressBar
+        {
+            get { return _softwareProgressBar; }
+            set { _softwareProgressBar = value; Changed("SoftwareProgressBar"); }
+        }
 
+        private bool _hasSelected;
+        public bool HasSelected
+        {
+            get { return _hasSelected; }
+            set { _hasSelected = value; Changed("HasSelected"); }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void Changed(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
